@@ -288,14 +288,14 @@ body.theme-light.is-mobile {
   --titlebar-text-color: #1C1F23;
   --titlebar-text-color-focused: #1C1F23;
 
-  /* —— 名称色（文件名等） —— */
-  --nav-item-background-hover: rgba(46, 50, 56, 0.05);   /* fill-0 */
-  --nav-item-background-active: #EAF5FF;                 /* Semi blue-0 */
-  --nav-item-background-selected: #EAF5FF;
-  --nav-item-color: #1C1F23;
-  --nav-item-color-hover: #1C1F23;
-  --nav-item-color-active: var(--accent-color);
-  --nav-item-color-selected: var(--accent-color);
+  /* —— 名称色（文件名等） —— 统一为飞书 --feishu-tree-* 值 */
+  --nav-item-background-hover: rgba(46, 50, 56, 0.09);
+  --nav-item-background-active: #E8F0FF;
+  --nav-item-background-selected: #E8F0FF;
+  --nav-item-color: #1F2329;
+  --nav-item-color-hover: #1F2329;
+  --nav-item-color-active: #1456F0;
+  --nav-item-color-selected: #1456F0;
   --nav-item-white: #FFFFFF;
   --nav-collapse-icon-color: rgba(28, 31, 35, 0.4);
 
@@ -343,6 +343,58 @@ body.theme-light.is-mobile {
   --feishu-tree-text-selected: #1456F0;
   --feishu-tree-icon: #646A73;              /* 二级图标色 */
   --feishu-tree-chevron: #8F959E;           /* 折叠箭头默认 */
+
+  /* —— 应用外壳变量（极简透明风） —— */
+  /* 标签页 Tabs：透明背景 + 半透明 hover + 当前 tab 用半透明 + 飞书蓝文字 */
+  --tab-background-active: transparent;
+  --tab-background: transparent;
+  --tab-text-color: var(--text-muted);
+  --tab-text-color-active: var(--accent-color);
+  --tab-text-color-focused: var(--text-normal);
+  --tab-font-size: 14px;
+  --tab-font-weight: 500;
+  --tab-font-weight-active: 600;
+  --tab-radius: 6px;
+  --tab-container-background: transparent;
+  --tab-outline-width: 0px;
+
+  /* Ribbon 侧边栏：中性灰底 + hover 半透明 */
+  --ribbon-background: var(--background-secondary-alt);
+  --ribbon-background-collapsed: var(--background-secondary-alt);
+  --ribbon-item-background-hover: rgba(46, 50, 56, 0.08);
+  --ribbon-item-background-active: rgba(var(--accent-color-rgb), 0.12);
+
+  /* 状态栏 Status Bar：透明背景 + 次级文字 + 无边框 */
+  --status-bar-background: transparent;
+  --status-bar-text-color: var(--text-muted);
+  --status-bar-background-active: rgba(var(--accent-color-rgb), 0.08);
+
+  /* View Header 文档工具栏：极简化（无背景无边框） */
+  --view-header-background: transparent;
+  --view-header-background-active: transparent;
+  --view-header-text-color: var(--text-muted);
+  --view-header-text-color-active: var(--text-normal);
+  --view-header-border-width: 0px;
+
+  /* Nav 项细节（补充缺失的） */
+  --nav-item-radius: 6px;
+  --nav-item-padding: 4px 8px;
+  --nav-item-weight: 400;
+  --nav-item-weight-active: 500;
+  --nav-indent-width: 16px;
+
+  /* 分隔线 & 图标 */
+  --divider-width: 1px;
+  --divider-color: var(--background-modifier-border);
+  --icon-color: var(--text-muted);
+  --icon-color-hover: var(--text-normal);
+  --icon-color-active: var(--accent-color);
+  --icon-opacity: 1;
+  --clickable-icon-radius: 6px;
+
+  /* Modal 圆角（飞书大圆角） */
+  --modal-radius: 12px;
+  --prompt-radius: 8px;
 }
 
 /* ============================================================
@@ -482,10 +534,10 @@ body.theme-dark.is-mobile {
   --titlebar-text-color: #F9F9F9;
   --titlebar-text-color-focused: #FFFFFF;
 
-  /* —— 导航项 —— */
-  --nav-item-background-hover: rgba(255, 255, 255, 0.08);
-  --nav-item-background-active: rgba(84, 169, 255, 0.16);
-  --nav-item-background-selected: rgba(84, 169, 255, 0.16);
+  /* —— 导航项 —— 统一为飞书 --feishu-tree-* 值 */
+  --nav-item-background-hover: rgba(255, 255, 255, 0.10);
+  --nav-item-background-active: rgba(84, 169, 255, 0.18);
+  --nav-item-background-selected: rgba(84, 169, 255, 0.18);
   --nav-item-color: #E0E2E6;
   --nav-item-color-hover: #F9F9F9;
   --nav-item-color-active: var(--accent-color);
@@ -537,6 +589,42 @@ body.theme-dark.is-mobile {
   --feishu-tree-text-selected: #54A9FF;
   --feishu-tree-icon: rgba(249, 249, 249, 0.65);
   --feishu-tree-chevron: rgba(249, 249, 249, 0.55);
+
+  /* —— 应用外壳变量（暗色极简透明风） —— */
+  --tab-background-active: transparent;
+  --tab-background: transparent;
+  --tab-text-color: var(--text-muted);
+  --tab-text-color-active: var(--accent-color);
+  --tab-text-color-focused: var(--text-normal);
+  --tab-radius: 6px;
+  --tab-container-background: transparent;
+  --tab-outline-width: 0px;
+
+  --ribbon-background: var(--background-secondary-alt);
+  --ribbon-background-collapsed: var(--background-secondary-alt);
+  --ribbon-item-background-hover: rgba(255, 255, 255, 0.08);
+  --ribbon-item-background-active: rgba(84, 169, 255, 0.18);
+
+  --status-bar-background: transparent;
+  --status-bar-text-color: var(--text-muted);
+  --status-bar-background-active: rgba(84, 169, 255, 0.10);
+
+  --view-header-background: transparent;
+  --view-header-background-active: transparent;
+  --view-header-text-color: var(--text-muted);
+  --view-header-text-color-active: var(--text-normal);
+  --view-header-border-width: 0px;
+
+  --nav-item-radius: 6px;
+  --nav-item-padding: 4px 8px;
+
+  --divider-color: var(--background-modifier-border);
+  --icon-color: var(--text-muted);
+  --icon-color-hover: var(--text-normal);
+  --icon-color-active: var(--accent-color);
+
+  --modal-radius: 12px;
+  --prompt-radius: 8px;
 }
 
 /* ============================================================
@@ -818,6 +906,62 @@ body.link-underline .markdown-source-view.mod-cm6 .cm-hmd-internal-link {
   indent-unit: 4ch;
 }
 
+/* —— Live Preview 编辑器：光标 + markdown 符号淡化 + 边角元素 —— */
+/* 光标：飞书品牌蓝 */
+.cm-cursor, .cm-dropCursor {
+  border-left: 1.2px solid var(--accent-color) !important;
+}
+.cm-fatcursor {
+  background: var(--accent-color);
+  color: var(--text-on-accent);
+}
+
+/* Markdown 格式符号 # - ** > [] 等：淡化到 faint（不喧宾夺主） */
+.markdown-source-view.mod-cm6 .cm-formatting,
+.markdown-source-view.mod-cm6 .cm-formatting-header,
+.markdown-source-view.mod-cm6 .cm-formatting-list-ul,
+.markdown-source-view.mod-cm6 .cm-formatting-list-ol,
+.markdown-source-view.mod-cm6 .cm-formatting-quote,
+.markdown-source-view.mod-cm6 .cm-formatting-strong,
+.markdown-source-view.mod-cm6 .cm-formatting-em,
+.markdown-source-view.mod-cm6 .cm-formatting-link {
+  color: var(--text-faint);
+  font-weight: 400;
+}
+
+/* 裸链接、转义符、脚注引用、引用文字 */
+.markdown-source-view.mod-cm6 .cm-hmd-barelink {
+  color: var(--text-muted);
+}
+.markdown-source-view.mod-cm6 .cm-hmd-escape {
+  color: var(--text-faint);
+}
+.markdown-source-view.mod-cm6 .cm-footref {
+  color: var(--accent-color);
+  font-size: 0.85em;
+  font-weight: 600;
+}
+.markdown-source-view.mod-cm6 .cm-quote {
+  color: var(--quote-color);
+}
+
+/* 折叠指示器、空格可视化、缩进线：淡化 */
+.markdown-source-view.mod-cm6 .cm-fold-indicator,
+.markdown-source-view.mod-cm6 .cm-foldPlaceholder {
+  background: var(--background-modifier-hover);
+  color: var(--text-muted);
+  border-radius: var(--radius-s);
+  padding: 0 4px;
+  font-size: 0.85em;
+}
+.markdown-source-view.mod-cm6 .cm-whitespace {
+  color: var(--text-faint);
+  opacity: 0.5;
+}
+.markdown-source-view.mod-cm6 .cm-indent {
+  color: var(--background-modifier-border);
+}
+
 /* —— 语法高亮：Reading View (PrismJS .token.*)
    映射与编辑模式 CodeMirror 完全一致，保证两种模式同色 —— */
 .markdown-preview-view .token.comment,
@@ -873,8 +1017,12 @@ body.link-underline .markdown-source-view.mod-cm6 .cm-hmd-internal-link {
 .markdown-source-view.mod-cm6 .cm-hmd-codeblock.cm-variable-2 { color: var(--code-normal); }
 .markdown-source-view.mod-cm6 .cm-variable-3,
 .markdown-source-view.mod-cm6 .cm-hmd-codeblock.cm-variable-3 { color: var(--code-builtin); }
-.markdown-source-view.mod-cm6 .cm-def,
+/* cm-def 限定到代码块内（避免正文里的链接定义被误染紫色） */
+.markdown-source-view.mod-cm6 .HyperMD-codeblock .cm-def,
 .markdown-source-view.mod-cm6 .cm-hmd-codeblock.cm-def { color: var(--code-function); }
+.markdown-source-view.mod-cm6 .cm-line:not(.HyperMD-codeblock) .cm-def {
+  color: var(--text-muted);
+}
 .markdown-source-view.mod-cm6 .cm-property,
 .markdown-source-view.mod-cm6 .cm-hmd-codeblock.cm-property { color: var(--code-property); }
 .markdown-source-view.mod-cm6 .cm-tag,
@@ -941,114 +1089,61 @@ body.link-underline .markdown-source-view.mod-cm6 .cm-hmd-internal-link {
   border-color: #16161A;
 }
 
-/* —— 表格：表头统一灰底字重 600、行间细边 —— */
-.markdown-preview-view table {
-  border-collapse: collapse;
-  width: 100%;
-  margin: 12px 0;
-  font-size: 1em;
+/* ============================================================
+   表格：用 Obsidian 官方 --table-* 变量族
+   一键关闭斑马纹（--table-row-alt-background: transparent）
+   阅读模式 + 编辑模式（Advanced Tables）共用同一组变量
+   ============================================================ */
+.theme-light {
+  --table-header-background: #F2F3F5;
+  --table-header-background-hover: #E6E8EA;
+  --table-header-border-color: var(--background-modifier-border);
+  --table-header-border-width: 1px;
+  --table-header-color: var(--text-normal);
+  --table-header-font: inherit;
+  --table-header-size: 1em;
+  --table-header-weight: 600;
+  --table-background: var(--background-primary);
+  --table-background-secondary: var(--background-primary);
+  --table-border-color: var(--background-modifier-border);
+  --table-border-width: 1px;
+  --table-text-color: var(--text-normal);
+  --table-text-size: 1em;
+  --table-line-height: 1.5;
+  --table-row-alt-background: transparent;        /* 关闭行斑马 */
+  --table-row-alt-background-hover: transparent;
+  --table-row-background-hover: var(--background-modifier-hover);
+  --table-column-alt-background: transparent;     /* 关闭列斑马 */
+  --table-cell-padding: 8px 12px;
+  --table-cell-vertical-alignment: top;
+  --table-white-space: normal;
+  --table-row-last-border-width: 0;
+  --table-column-first-border-width: 0;
+  --table-column-last-border-width: 0;
 }
-/* 表头：所有 th 强制同一背景（用 !important 覆盖任何 nth-child 斑马规则） */
-.markdown-preview-view thead th,
-.markdown-preview-view th {
-  background: #F2F3F5 !important;
-  font-weight: 600;
-  text-align: left;
-  padding: 8px 12px;
-  border-bottom: 1px solid var(--background-modifier-border);
-  color: var(--text-normal);
-  line-height: 1.5;
-}
-.theme-dark .markdown-preview-view thead th,
-.theme-dark .markdown-preview-view th {
-  background: #2A2B31 !important;
-}
-/* td 也强制统一背景，杀掉任何列级斑马规则 */
-.markdown-preview-view td {
-  padding: 8px 12px;
-  border-bottom: 1px solid var(--background-modifier-border);
-  background: var(--background-primary) !important;
-  color: var(--text-normal);
-  line-height: 1.5;
-}
-/* 显式清除 Obsidian 可能存在的 nth-child 列底色 */
-.markdown-preview-view table th:nth-child(even),
-.markdown-preview-view table th:nth-child(odd),
-.markdown-preview-view table td:nth-child(even),
-.markdown-preview-view table td:nth-child(odd),
-.markdown-preview-view table tr:nth-child(even) td,
-.markdown-preview-view table tr:nth-child(odd) td {
-  background: transparent !important;
-}
-/* 但 th 重新设回灰底（在上面 nth-child 清除之后再覆盖一次） */
-.markdown-preview-view thead th:nth-child(even),
-.markdown-preview-view thead th:nth-child(odd) {
-  background: #F2F3F5 !important;
-}
-.theme-dark .markdown-preview-view thead th:nth-child(even),
-.theme-dark .markdown-preview-view thead th:nth-child(odd) {
-  background: #2A2B31 !important;
-}
-.markdown-preview-view tr:last-child td {
-  border-bottom: none;
-}
-.markdown-preview-view tbody tr:hover {
-  background: var(--background-modifier-hover);
+.theme-dark {
+  --table-header-background: #2A2B31;
+  --table-header-background-hover: #35363C;
+  --table-header-border-color: var(--background-modifier-border);
+  --table-background: var(--background-primary);
+  --table-background-secondary: var(--background-primary);
+  --table-row-alt-background: transparent;
+  --table-column-alt-background: transparent;
+  --table-row-background-hover: var(--background-modifier-hover);
 }
 
-/* —— 编辑模式（Live Preview）表格：Advanced Tables 插件的 table-editor —— */
-/* 这类表格不在 .markdown-preview-view 下，而在 .markdown-source-view → cm-embed-block → table-wrapper */
-.markdown-source-view table.table-editor,
-.cm-embed-block.cm-table-widget table.table-editor {
-  border-collapse: collapse;
+/* 容器间距（官方变量未覆盖的部分） */
+.markdown-preview-view table {
+  margin: 12px 0;
+}
+.markdown-preview-view tbody tr:hover,
+.markdown-source-view table.table-editor tbody tr:hover {
+  background: var(--table-row-background-hover);
+}
+
+/* 编辑模式 Advanced Tables 表格也用同一套变量，无需重复规则 */
+.markdown-source-view table.table-editor {
   font-size: 1em;
-}
-.markdown-source-view table.table-editor th,
-.cm-embed-block.cm-table-widget table.table-editor th {
-  background: #F2F3F5 !important;
-  color: var(--text-normal) !important;
-  font-weight: 600 !important;
-  text-align: left;
-  padding: 8px 12px !important;
-  border-bottom: 1px solid var(--background-modifier-border);
-  line-height: 1.5;
-}
-.theme-dark .markdown-source-view table.table-editor th,
-.theme-dark .cm-embed-block.cm-table-widget table.table-editor th {
-  background: #2A2B31 !important;
-}
-.markdown-source-view table.table-editor td,
-.cm-embed-block.cm-table-widget table.table-editor td {
-  padding: 8px 12px !important;
-  border-bottom: 1px solid var(--background-modifier-border);
-  background: var(--background-primary) !important;
-}
-/* 清除编辑模式表格可能的 nth-child 斑马 */
-.markdown-source-view table.table-editor th:nth-child(even),
-.markdown-source-view table.table-editor th:nth-child(odd),
-.markdown-source-view table.table-editor td:nth-child(even),
-.markdown-source-view table.table-editor td:nth-child(odd),
-.markdown-source-view table.table-editor tr:nth-child(even) td,
-.markdown-source-view table.table-editor tr:nth-child(odd) td,
-.cm-embed-block.cm-table-widget table.table-editor th:nth-child(even),
-.cm-embed-block.cm-table-widget table.table-editor th:nth-child(odd),
-.cm-embed-block.cm-table-widget table.table-editor td:nth-child(even),
-.cm-embed-block.cm-table-widget table.table-editor td:nth-child(odd),
-.cm-embed-block.cm-table-widget table.table-editor tr:nth-child(even) td,
-.cm-embed-block.cm-table-widget table.table-editor tr:nth-child(odd) td {
-  background: transparent !important;
-}
-.markdown-source-view table.table-editor thead th:nth-child(even),
-.markdown-source-view table.table-editor thead th:nth-child(odd),
-.cm-embed-block.cm-table-widget table.table-editor thead th:nth-child(even),
-.cm-embed-block.cm-table-widget table.table-editor thead th:nth-child(odd) {
-  background: #F2F3F5 !important;
-}
-.theme-dark .markdown-source-view table.table-editor thead th:nth-child(even),
-.theme-dark .markdown-source-view table.table-editor thead th:nth-child(odd),
-.theme-dark .cm-embed-block.cm-table-widget table.table-editor thead th:nth-child(even),
-.theme-dark .cm-embed-block.cm-table-widget table.table-editor thead th:nth-child(odd) {
-  background: #2A2B31 !important;
 }
 
 /* —— Tag #xxx：胶囊形 + 浅底 + hover 加深 —— */
@@ -1212,38 +1307,12 @@ body.link-underline .markdown-source-view.mod-cm6 .cm-hmd-internal-link {
   font-weight: 400;
 }
 
-/* —— 2. hover/active/selected 三态（飞书核心 DNA） —— */
-/* hover：9% 黑叠加 */
-.tree-item-self.nav-folder-title:hover,
-.tree-item-self.nav-file-title:hover {
-  background: var(--feishu-tree-bg-hover) !important;
-  border-radius: 6px;
-}
-/* active：13% 黑叠加（按下瞬间） */
-.tree-item-self.nav-folder-title:active,
-.tree-item-self.nav-file-title:active {
-  background: var(--feishu-tree-bg-active) !important;
-}
-/* selected：飞书蓝浅版 + 蓝色文字 */
-.tree-item-self.nav-folder-title.is-active,
-.tree-item-self.nav-file-title.is-active,
-.tree-item-self.nav-folder-title.has-focus,
-.tree-item-self.nav-file-title.has-focus {
-  background: var(--feishu-tree-bg-selected) !important;
-  color: var(--feishu-tree-text-selected) !important;
-  border-radius: 6px;
-  font-weight: 500 !important;
-}
+/* —— 2. hover/active/selected 三态：走官方 --nav-item-* 变量，无需选择器规则 —— */
+/* Obsidian 内部会自动把 --nav-item-background-hover 等应用到对应状态 */
+/* 仅保留 focus 描边清除（Obsidian 默认 box-shadow 不够飞书） */
 .tree-item.nav-folder.has-focus > .tree-item-self,
 .tree-item.nav-file.has-focus > .tree-item-self {
-  background: var(--feishu-tree-bg-selected) !important;
-  box-shadow: none;  /* 去掉 Obsidian 默认的 focus 描边 */
-}
-/* 拖拽悬停：飞书蓝半透明 */
-.tree-item-self.nav-folder-title.is-being-dragged-over {
-  background: var(--feishu-tree-bg-selected) !important;
-  color: var(--feishu-tree-text-selected) !important;
-  border-radius: 6px;
+  box-shadow: none;
 }
 
 /* —— 3. 线性 chevron 折叠箭头（SVG mask，替换原生三角） —— */
@@ -1341,20 +1410,11 @@ body.link-underline .markdown-source-view.mod-cm6 .cm-hmd-internal-link {
   padding: 4px 8px;
 }
 
-/* —— 6. 去掉文件夹展开范围的竖线（飞书云文档没有这种缩进引导线） —— */
-/* Obsidian 1.12+ 可能给子层级容器加 border-left 作为竖线引导，飞书风格不需要 */
-.nav-folder.mod-root .nav-folder-children,
-.nav-folder.mod-root .nav-folder > .nav-folder-children,
-.tree-item.nav-folder > .tree-item-children,
-.tree-item-children.nav-folder-children,
-.nav-folder-children {
-  border-left: none !important;
-  border-left-width: 0 !important;
-}
-/* 也防止 .tree-item-self 上可能的左边框 */
-.tree-item.nav-folder > .tree-item-self,
-.tree-item.nav-file > .tree-item-self {
-  border-left: none !important;
+/* —— 6. 去掉文件夹展开范围的竖线：用官方 --nav-indentation-guide-width:0 一行搞定 —— */
+/* 飞书云文档没有这种缩进引导线 */
+body {
+  --nav-indentation-guide-width: 0;
+  --nav-indentation-guide-color: transparent;
 }
 
 /* —— 7. Properties 属性面板：飞书风紧凑化（用官方 --metadata-* 变量） —— */
@@ -1408,6 +1468,7 @@ button:not(.mod-cta):not(.mod-muted):not(.mod-warning):not(.mod-close):not(.moda
 .dropdown {
   background: var(--background-primary);
   border: 1px solid var(--background-modifier-border);
+  border-radius: var(--radius-m);
   color: var(--text-normal);
   padding: 6px 16px;
   font-weight: 500;
@@ -1449,13 +1510,332 @@ button:focus,
   box-shadow: 0 0 0 2px rgba(var(--accent-color-rgb), 0.18);
 }
 
-/* —— Suggest / 弹层：飞书阴影 —— */
+/* —— Suggest / 命令面板 / 弹层：飞书阴影 + 圆角 —— */
 .suggestion-container,
 .menu,
 .prompt {
   border-radius: var(--radius-m);
   box-shadow: var(--shadow-l);
   border: 1px solid var(--background-modifier-border);
+  background: var(--background-primary);
+}
+
+/* —— Modal：飞书大圆角 + 阴影 + 边框 —— */
+.modal,
+.modal-bg {
+  border-radius: var(--modal-radius);
+}
+.modal {
+  box-shadow: var(--shadow-l);
+  border: 1px solid var(--background-modifier-border);
+}
+.modal-container {
+  --modal-radius: 12px;
+}
+/* Modal 标题 */
+.modal-title {
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--text-normal);
+}
+/* Modal 关闭按钮 */
+.modal-close-button {
+  border-radius: var(--radius-s);
+  color: var(--text-muted);
+}
+.modal-close-button:hover {
+  background: var(--background-modifier-hover);
+  color: var(--text-normal);
+}
+
+/* —— 命令面板（Cmd+P）输入框：飞书风格 —— */
+.prompt-input {
+  border-radius: var(--radius-m);
+  border: 1px solid var(--background-modifier-border);
+  background: var(--background-modifier-form-field);
+}
+.prompt-input:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px rgba(var(--accent-color-rgb), 0.18);
+}
+/* 命令面板结果项：hover 半透明、active 飞书蓝 */
+.suggestion-item {
+  border-radius: var(--radius-s);
+  padding: 8px 12px;
+}
+.suggestion-item.is-selected {
+  background: rgba(var(--accent-color-rgb), 0.10);
+  color: var(--accent-color);
+}
+
+/* ============================================================
+   边角元素飞书化（高+中优先 9 项）
+   ============================================================ */
+
+/* —— H1. 高亮标记 ==text==：飞书黄 + 圆角 + padding + 换行不断裂 —— */
+.markdown-preview-view mark,
+.markdown-preview-view .text-highlight,
+.markdown-source-view.mod-cm6 .cm-highlight {
+  background: var(--text-highlight-bg);
+  color: var(--text-normal);
+  border-radius: 2px;
+  padding: 0 4px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/* —— H2. 未解析 wiki 链接 [[dead]]：灰 + 虚下划线（区别于正常链） —— */
+.markdown-preview-view .is-unresolved,
+.markdown-source-view.mod-cm6 .cm-hmd-internal-link.is-unresolved {
+  color: var(--link-unresolved-color);
+  text-decoration: underline dotted;
+  text-decoration-color: var(--link-unresolved-color);
+  text-underline-offset: 3px;
+}
+.markdown-preview-view .is-unresolved:hover {
+  color: var(--text-muted);
+}
+
+/* —— H3. 图片嵌入：12px 圆角 + 1px 极淡描边 —— */
+.markdown-preview-view img,
+.markdown-preview-view .image-embed img {
+  border-radius: var(--radius-l);
+  box-shadow: 0 0 0 1px var(--background-modifier-border);
+}
+
+/* —— H4. 嵌入式笔记块 ![[note]]：浅灰底 + 边框 + 12px 圆角 + 标题加粗 —— */
+.markdown-preview-view .markdown-embed,
+.markdown-preview-view .internal-embed.markdown-embed {
+  border: 1px solid var(--background-modifier-border);
+  border-radius: var(--radius-l);
+  padding: 12px 16px;
+  margin: 12px 0;
+  background: var(--background-secondary-alt);
+}
+.markdown-preview-view .markdown-embed-title,
+.markdown-preview-view .markdown-embed .markdown-preview-view {
+  font-size: 1em;
+}
+.markdown-preview-view .markdown-embed-title {
+  font-weight: 600;
+  color: var(--text-normal);
+  margin-bottom: 8px;
+}
+/* 嵌入块内的背景透明（继承父容器灰底，不再叠白） */
+.markdown-preview-view .markdown-embed .markdown-preview-view {
+  background: transparent;
+}
+
+/* —— M1. hover popover（链接悬停预览）：12px 圆角 + 更柔的阴影 —— */
+.popover.hover-popover {
+  border-radius: var(--radius-l);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12), 0 0 1px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--background-modifier-border);
+  background: var(--background-primary);
+}
+
+/* —— M2. 数学公式：块级浅灰底圆角、行内 4px 间距 —— */
+.markdown-preview-view .math.math-inline,
+.markdown-source-view.mod-cm6 .cm-math {
+  padding: 0 4px;
+}
+.markdown-preview-view .math.math-block,
+.markdown-source-view.mod-cm6 .cm-math-block {
+  margin: 16px 0;
+  padding: 12px 16px;
+  background: var(--background-modifier-hover);
+  border-radius: var(--radius-m);
+  text-align: center;
+  overflow-x: auto;
+}
+
+/* —— M3. Properties 面板：6px 圆角 + 关掉 Obsidian 默认大写 —— */
+.markdown-preview-view .metadata-container,
+.metadata-container {
+  border-radius: var(--radius-m);
+  padding: 4px 0;
+  margin-bottom: 16px;
+}
+.metadata-properties-heading,
+.metadata-properties-title {
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+/* —— M4. Mermaid 图表：透明背景 + 居中（不被代码块灰底误套） —— */
+.markdown-preview-view .block-language-mermaid,
+.markdown-preview-view pre.mermaid,
+.markdown-preview-view .mermaid {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 12px 0;
+  text-align: center;
+}
+/* Live Preview 的 Mermaid 也去掉代码块样式 */
+.markdown-source-view.mod-cm6 .cm-embed-block:has(.mermaid) {
+  background: transparent;
+  border: none;
+}
+
+/* —— M5. 脚注 [^1]：顶部分隔线 + 0.88em + 灰文字 —— */
+.markdown-preview-view sup .footnote-ref {
+  font-size: 0.75em;
+  font-weight: 600;
+  color: var(--accent-color);
+  padding: 0 2px;
+}
+.markdown-preview-view .footnotes {
+  font-size: 0.88em;
+  color: var(--text-muted);
+  border-top: 1px solid var(--background-modifier-border);
+  margin-top: 24px;
+  padding-top: 8px;
+}
+.markdown-preview-view .footnotes hr {
+  display: none;
+}
+.markdown-preview-view .footnote-backref {
+  font-size: 0.85em;
+  padding: 0 4px;
+  text-decoration: none;
+}
+
+/* ============================================================
+   插件面板飞书化（Dataview / Settings / Search / Flair）
+   ============================================================ */
+
+/* —— Dataview 表格：复用官方 --table-* 变量（自动继承）+ 修正字号 —— */
+.markdown-preview-view .dataview.table-view-table,
+.markdown-preview-view .table-view-table {
+  font-size: 1em;
+}
+.markdown-preview-view .dataview.table-view-table thead th,
+.markdown-preview-view .table-view-table thead th {
+  background: var(--table-header-background);
+  font-weight: var(--table-header-weight);
+}
+.theme-dark .markdown-preview-view .dataview.table-view-table thead th,
+.theme-dark .markdown-preview-view .table-view-table thead th {
+  background: var(--table-header-background);
+}
+
+/* —— Dataview 内联字段 [key:: value]：胶囊式 key/value —— */
+.markdown-preview-view .dataview.inline-field-key {
+  background: var(--background-modifier-hover);
+  color: var(--text-muted);
+  border-radius: var(--radius-s) 0 0 var(--radius-s);
+  font-family: var(--font-monospace-theme);
+  padding: 1px 6px;
+  font-size: 0.88em;
+}
+.markdown-preview-view .dataview.inline-field-value {
+  background: var(--background-secondary-alt);
+  color: var(--text-normal);
+  border-radius: 0 var(--radius-s) var(--radius-s) 0;
+  font-family: var(--font-monospace-theme);
+  padding: 1px 6px;
+  font-size: 0.88em;
+}
+
+/* —— Dataview 列表：与正文列表一致 —— */
+.markdown-preview-view .dataview-ul,
+.markdown-preview-view .dataview-result-list-ul {
+  padding-left: 24px;
+}
+.markdown-preview-view .dataview-result-list-li {
+  margin-top: 4px;
+}
+.markdown-preview-view .dataview-result-list-li::marker {
+  color: var(--text-muted);
+}
+
+/* —— Flair（"Community plugin" 标签）：飞书胶囊风 —— */
+.community-item .flair,
+.modal .flair,
+.flair.mod-pop {
+  background: var(--tag-background);
+  color: var(--text-muted);
+  border-radius: var(--tag-radius);
+  padding: 1px 8px;
+  font-size: 11px;
+  font-weight: 500;
+  margin-left: 6px;
+}
+
+/* —— Settings 面板：左 nav 圆角 + 飞书蓝选中 + 设置项分隔线 —— */
+.vertical-tab-nav-item {
+  padding: 6px 12px;
+  border-radius: var(--radius-m);
+  color: var(--text-normal);
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.12s ease;
+}
+.vertical-tab-nav-item:hover {
+  background: var(--background-modifier-hover);
+}
+.vertical-tab-nav-item.is-active {
+  background: rgba(var(--accent-color-rgb), 0.10);
+  color: var(--accent-color);
+  font-weight: 500;
+}
+.setting-item-name {
+  color: var(--text-normal);
+  font-weight: 500;
+  font-size: 14px;
+}
+.setting-item-description {
+  color: var(--text-muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+.setting-item {
+  padding: 12px 0;
+  border-top: 1px solid var(--background-modifier-border);
+}
+.setting-item:first-child {
+  border-top: none;
+}
+.vertical-tab-content {
+  padding: 24px 32px;
+}
+
+/* —— 搜索结果：hover 半透明 —— */
+.search-result-file-match {
+  padding: 6px 10px;
+  border-radius: var(--radius-s);
+  cursor: pointer;
+  transition: background 0.12s ease;
+}
+.search-result-file-match:hover {
+  background: var(--background-modifier-hover);
+}
+
+/* —— 标签面板 / 反链面板 / 出链面板：复用目录树三态 —— */
+.tag-pane-tag-self,
+.backlink-pane > .tree-item-self,
+.outgoing-link-pane > .tree-item-self {
+  border-radius: var(--nav-item-radius);
+  transition: background 0.12s ease;
+}
+.tag-pane-tag-self:hover,
+.backlink-pane > .tree-item-self:hover,
+.outgoing-link-pane > .tree-item-self:hover {
+  background: var(--nav-item-background-hover);
+}
+.tag-pane-tag-self.is-active {
+  background: var(--nav-item-background-active);
+  color: var(--nav-item-color-active);
+}
+
+/* —— 嵌入式反链区分隔 —— */
+.embedded-backlinks {
+  border-top: 1px solid var(--background-modifier-border);
+  padding-top: 12px;
+  margin-top: 16px;
 }
 
 /* —— Tooltip / Notice / 通知气泡：深底白字，保证对比度可读 —— */
