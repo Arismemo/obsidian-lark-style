@@ -856,15 +856,27 @@ body {
 .markdown-preview-view h4,
 .markdown-preview-view h5,
 .markdown-preview-view h6,
-.markdown-source-view.mod-cm6 .cm-header {
+.markdown-source-view.mod-cm6 .cm-header,
+.markdown-source-view.mod-cm6 .cm-header-1,
+.markdown-source-view.mod-cm6 .cm-header-2,
+.markdown-source-view.mod-cm6 .cm-header-3,
+.markdown-source-view.mod-cm6 .cm-header-4,
+.markdown-source-view.mod-cm6 .cm-header-5,
+.markdown-source-view.mod-cm6 .HyperMD-header-1,
+.markdown-source-view.mod-cm6 .HyperMD-header-2,
+.markdown-source-view.mod-cm6 .HyperMD-header-3,
+.markdown-source-view.mod-cm6 .HyperMD-header-4,
+.markdown-source-view.mod-cm6 .HyperMD-header-5,
+.markdown-source-view.mod-cm6 .HyperMD-header-6 {
   font-weight: 600;
   letter-spacing: -0.01em;
   border-bottom: none;
   line-height: 1.4;
 }
-/* 字号 + 颜色引用变量（之前未引用导致失效） */
+/* 字号 + 颜色引用变量。
+   只作用于 .HyperMD-header-N（行容器），不作用于 .cm-header-N（内层 span）——
+   否则 em 会被复合计算两次，导致字号双倍放大 */
 .markdown-preview-view h1,
-.markdown-source-view.mod-cm6 .cm-header-1,
 .markdown-source-view.mod-cm6 .HyperMD-header-1 {
   font-size: var(--h1-size);
   color: var(--h1-color);
@@ -874,41 +886,35 @@ body {
 }
 /* Style Settings 开关：用户开启 .h1-anchor-off 时移除锚点 */
 body.h1-anchor-off .markdown-preview-view h1,
-body.h1-anchor-off .markdown-source-view.mod-cm6 .cm-header-1,
 body.h1-anchor-off .markdown-source-view.mod-cm6 .HyperMD-header-1 {
   padding-bottom: 0;
   border-bottom: none;
 }
 .markdown-preview-view h2,
-.markdown-source-view.mod-cm6 .cm-header-2,
 .markdown-source-view.mod-cm6 .HyperMD-header-2 {
   font-size: var(--h2-size);
   color: var(--h2-color);
   margin: 24px 0 10px;
 }
 .markdown-preview-view h3,
-.markdown-source-view.mod-cm6 .cm-header-3,
 .markdown-source-view.mod-cm6 .HyperMD-header-3 {
   font-size: var(--h3-size);
   color: var(--h3-color);
   margin: 20px 0 8px;
 }
 .markdown-preview-view h4,
-.markdown-source-view.mod-cm6 .cm-header-4,
 .markdown-source-view.mod-cm6 .HyperMD-header-4 {
   font-size: var(--h4-size);
   color: var(--h4-color);
   margin: 16px 0 6px;
 }
 .markdown-preview-view h5,
-.markdown-source-view.mod-cm6 .cm-header-5,
 .markdown-source-view.mod-cm6 .HyperMD-header-5 {
   font-size: var(--h5-size);
   color: var(--h5-color);
   margin: 16px 0 6px;
 }
 .markdown-preview-view h6,
-.markdown-source-view.mod-cm6 .cm-header-6,
 .markdown-source-view.mod-cm6 .HyperMD-header-6 {
   font-size: var(--h6-size);
   color: var(--h6-color);
@@ -1155,7 +1161,22 @@ body.link-underline .markdown-source-view.mod-cm6 .cm-hmd-internal-link {
   font-weight: 600;
 }
 .markdown-source-view.mod-cm6 .cm-quote {
-  color: var(--quote-color);
+  color: var(--text-normal);  /* 与阅读模式 blockquote 一致 */
+}
+/* 编辑模式引用块：加左边框（CodeMirror 行模型用 ::before 模拟） */
+.markdown-source-view.mod-cm6 .HyperMD-quote {
+  padding-left: 16px;
+  position: relative;
+}
+.markdown-source-view.mod-cm6 .HyperMD-quote::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 2px;
+  bottom: 2px;
+  width: 3px;
+  background: var(--color-base-50, #6B7075);
+  border-radius: 0;
 }
 
 /* 折叠指示器、空格可视化、缩进线：淡化 */
@@ -1479,6 +1500,19 @@ body.callout-notion .markdown-source-view.mod-cm6 .callout {
   border: none;
   border-top: 1px solid #2A2B31;
   margin: 24px 0;
+}
+/* 编辑模式水平线 `---`：CodeMirror 渲染为 cm-line.hr，用伪元素画线 */
+.markdown-source-view.mod-cm6 .cm-line.HyperMD-hr,
+.markdown-source-view.mod-cm6 .cm-line.hr {
+  color: transparent;
+  position: relative;
+  height: 1px;
+  margin: 24px 0;
+  border-top: 1px solid var(--background-modifier-border);
+}
+.theme-dark .markdown-source-view.mod-cm6 .cm-line.HyperMD-hr,
+.theme-dark .markdown-source-view.mod-cm6 .cm-line.hr {
+  border-top-color: #2A2B31;
 }
 
 /* —— 加粗：飞书风只改字重不变色 —— */
