@@ -395,6 +395,29 @@ body.theme-light.is-mobile {
   /* Modal 圆角（飞书大圆角） */
   --modal-radius: 12px;
   --prompt-radius: 8px;
+
+  /* —— Callout 官方变量（让用户可在 Style Settings 调） —— */
+  --callout-radius: 3px;
+  --callout-border-width: 1px;
+  --callout-border-opacity: 1;
+  --callout-padding: 12px 16px;
+  --callout-title-padding: 0 0 8px 0;
+  --callout-content-padding: 0;
+  --callout-title-size: 0.95em;
+  --callout-title-weight: 600;
+  --callout-blend-mode: multiply;  /* 嵌套 callout 颜色叠加 */
+
+  /* —— 正文缩进引导线（飞书默认无，淡化到几乎不可见） —— */
+  --indentation-guide-width: 1px;
+  --indentation-guide-color: rgba(28, 31, 35, 0.04);
+  --indentation-guide-color-active: rgba(var(--accent-color-rgb), 0.30);
+
+  /* —— Tabs 补全缺失变量 —— */
+  --tab-divider-color: var(--background-modifier-border);
+  --tab-font-size: 14px;
+  --tab-font-weight: 500;
+  --tab-outline-color: transparent;
+  --tab-curve: 0;
 }
 
 /* ============================================================
@@ -625,6 +648,29 @@ body.theme-dark.is-mobile {
 
   --modal-radius: 12px;
   --prompt-radius: 8px;
+
+  /* —— Callout 官方变量（暗色） —— */
+  --callout-radius: 3px;
+  --callout-border-width: 1px;
+  --callout-border-opacity: 1;
+  --callout-padding: 12px 16px;
+  --callout-title-padding: 0 0 8px 0;
+  --callout-content-padding: 0;
+  --callout-title-size: 0.95em;
+  --callout-title-weight: 600;
+  --callout-blend-mode: multiply;
+
+  /* —— 正文缩进引导线（暗色） —— */
+  --indentation-guide-width: 1px;
+  --indentation-guide-color: rgba(255, 255, 255, 0.04);
+  --indentation-guide-color-active: rgba(84, 169, 255, 0.30);
+
+  /* —— Tabs 补全 —— */
+  --tab-divider-color: var(--background-modifier-border);
+  --tab-font-size: 14px;
+  --tab-font-weight: 500;
+  --tab-outline-color: transparent;
+  --tab-curve: 0;
 }
 
 /* ============================================================
@@ -1171,18 +1217,23 @@ body.link-underline .markdown-source-view.mod-cm6 .cm-hmd-internal-link {
 /* —— Callout：飞书 Banner 风（浅彩底 + 1px 同色描边 + 3px 圆角，无左色条） —— */
 .markdown-preview-view .callout,
 .markdown-source-view.mod-cm6 .callout {
-  border-radius: var(--radius-s);
-  border: 1px solid var(--callout-color, var(--accent-color));
-  border-left: 1px solid var(--callout-color, var(--accent-color));
+  border-radius: var(--callout-radius);
+  border: var(--callout-border-width) solid var(--callout-color, var(--accent-color));
+  border-left: var(--callout-border-width) solid var(--callout-color, var(--accent-color));
   background: color-mix(in srgb, var(--callout-color, var(--accent-color)) 8%, transparent);
   box-shadow: none;
-  padding: 12px 16px;
+  padding: var(--callout-padding);
 }
 .markdown-preview-view .callout .callout-title,
 .markdown-source-view.mod-cm6 .callout .callout-title {
-  font-weight: 600;
-  font-size: 0.95em;
+  font-weight: var(--callout-title-weight);
+  font-size: var(--callout-title-size);
   color: var(--callout-color, var(--accent-color));
+  padding: var(--callout-title-padding);
+}
+.markdown-preview-view .callout .callout-content,
+.markdown-source-view.mod-cm6 .callout .callout-content {
+  padding: var(--callout-content-padding);
 }
 /* 飞书语义色精确配置（覆盖 Obsidian 默认） */
 .markdown-preview-view .callout[data-callout="info"],
@@ -1422,15 +1473,23 @@ body {
   --metadata-background: transparent;
   --metadata-divider-width: 1px;
   --metadata-divider-color: var(--background-modifier-border);
+  --metadata-divider-color-hover: var(--background-modifier-border-hover);
+  --metadata-divider-color-focus: rgba(var(--accent-color-rgb), 0.30);
   --metadata-gap: 0px;
   --metadata-property-background-hover: rgba(var(--accent-color-rgb), 0.04);
+  --metadata-property-background-active: rgba(var(--accent-color-rgb), 0.08);
   --metadata-label-text-color: var(--text-muted);
   --metadata-label-text-color-hover: var(--text-normal);
+  --metadata-label-background-hover: transparent;
   --metadata-input-background: transparent;
   --metadata-property-text-color: var(--text-normal);
   --metadata-label-width: 140px;
   --metadata-label-font-size: 13px;
   --metadata-input-font-size: 13px;
+  --metadata-input-height: 28px;
+  --metadata-property-radius: 4px;
+  --metadata-sidebar-input-font-size: 13px;
+  --metadata-sidebar-label-font-size: 13px;
 }
 
 /* —— 8. Inline title：飞书文档标题感（30px / 600 / 顶部留白） —— */
@@ -1893,17 +1952,69 @@ button:focus,
    F. 打印（导出 PDF 强制浅色，参考 Things 主题做法）
    ============================================================ */
 @media print {
+  /* 暗色模式强制浅色输出 */
   .theme-dark {
     color-scheme: light;
     --background-primary: #FFFFFF;
     --background-secondary: #FFFFFF;
-    --text-normal: #1C1F23;
-    --text-muted: rgba(28, 31, 35, 0.8);
-    --text-faint: rgba(28, 31, 35, 0.62);
+    --text-normal: #1F2329;
+    --text-muted: #646A73;
+    --text-faint: #8F959E;
     --accent-color: #1456F0;
     --link-color: #1456F0;
     --code-background: #F9F9F9;
     --background-modifier-border: rgba(28, 31, 35, 0.08);
     --background-modifier-hover: rgba(46, 50, 56, 0.05);
+  }
+  /* 浅色模式也强制纯白底（防 system dark-mode 渗透） */
+  body {
+    --background-primary: #FFFFFF;
+    --background-secondary: #FFFFFF;
+    --text-normal: #1F2329;
+  }
+  /* 隐藏所有外壳 UI */
+  .workspace-ribbon,
+  .nav-header,
+  .status-bar,
+  .view-header,
+  .workspace-tab-header-container,
+  .scrollbar-wrap {
+    display: none !important;
+  }
+  /* 打印区去掉 max-width 居中限制 */
+  .markdown-preview-view {
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  /* 强制链接色 */
+  a, .internal-link {
+    color: #1456F0 !important;
+  }
+}
+
+/* ============================================================
+   移动端响应式（飞书移动端适配）
+   ============================================================ */
+.is-mobile .markdown-preview-view,
+.is-mobile .markdown-source-view.mod-cm6 .cm-editor {
+  padding: 0 16px;
+}
+.is-mobile .modal {
+  --modal-radius: 8px;
+}
+.is-mobile .tree-item-self.nav-file-title,
+.is-mobile .tree-item-self.nav-folder-title {
+  padding: 6px 8px;
+}
+.is-mobile .callout {
+  padding: 10px 12px;
+}
+
+/* 窄屏断点：正文字号微调 */
+@media (max-width: 768px) {
+  .markdown-preview-view,
+  .markdown-source-view.mod-cm6 {
+    --base-font-size: 15px;
   }
 }
