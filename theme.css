@@ -1773,18 +1773,22 @@ button {
 /* 次按钮（非 CTA / 非复制按钮 / 非代码 flair）：飞书描边按钮风 */
 button:not(.mod-cta):not(.mod-muted):not(.mod-warning):not(.mod-close):not(.modal-close-button):not(.copy-code-button):not(.clickable-icon),
 .dropdown {
-  background: var(--background-primary);
+  background-color: var(--background-primary);
   border: 1px solid var(--background-modifier-border);
   border-radius: var(--radius-m);
   color: var(--text-normal);
-  padding: 6px 16px;
+  padding: 6px 28px 6px 12px;   /* 右侧 28px 给下拉箭头让位 */
   font-weight: 500;
   font-size: 14px;
-  transition: background 0.15s ease, border-color 0.15s ease;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
 }
-button:not(.mod-cta):not(.mod-muted):not(.mod-warning):not(.mod-close):not(.modal-close-button):not(.copy-code-button):not(.clickable-icon):hover,
-.dropdown:hover {
+button:not(.mod-cta):not(.mod-muted):not(.mod-warning):not(.mod-close):not(.modal-close-button):not(.copy-code-button):not(.clickable-icon):hover {
   background: var(--background-modifier-hover);
+  border-color: var(--background-modifier-border-hover);
+}
+/* dropdown 单独处理 hover（用 background-color 避免清掉原生下拉箭头背景图） */
+.dropdown:hover {
+  background-color: var(--background-modifier-hover);
   border-color: var(--background-modifier-border-hover);
 }
 
