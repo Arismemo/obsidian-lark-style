@@ -850,13 +850,17 @@ body {
 }
 
 /* —— 标题折叠指示器：飞书风格默认隐藏，hover 标题时浮现 —— */
-/* 暗色下默认会显示成小灰块，飞书文档没有这种装饰 */
+/* 暗色下 .cm-fold-indicator 容器本身有背景色，显示成小灰块 */
+/* 需要同时隐藏外层容器 + 内层 indicator + svg */
 .markdown-preview-view .heading-collapse-indicator,
 .markdown-preview-view .collapse-indicator,
-.markdown-source-view.mod-cm6 .collapse-indicator {
+.markdown-source-view.mod-cm6 .collapse-indicator,
+.markdown-source-view.mod-cm6 .cm-fold-indicator {
   opacity: 0;
+  background: transparent !important;  /* 清掉 Obsidian 给 cm-fold-indicator 的背景 */
   transition: opacity 0.15s ease;
 }
+/* hover 标题时浮现折叠指示器 */
 .markdown-preview-view h1:hover .heading-collapse-indicator,
 .markdown-preview-view h2:hover .heading-collapse-indicator,
 .markdown-preview-view h3:hover .heading-collapse-indicator,
@@ -864,9 +868,24 @@ body {
 .markdown-preview-view h5:hover .heading-collapse-indicator,
 .markdown-preview-view h6:hover .heading-collapse-indicator,
 .markdown-source-view.mod-cm6 .HyperMD-header:hover .collapse-indicator,
-.markdown-source-view.mod-cm6 .cm-line.HyperMD-header:hover .collapse-indicator {
+.markdown-source-view.mod-cm6 .HyperMD-header:hover .cm-fold-indicator,
+.markdown-source-view.mod-cm6 .cm-line.HyperMD-header:hover .collapse-indicator,
+.markdown-source-view.mod-cm6 .cm-line.HyperMD-header:hover .cm-fold-indicator {
   opacity: 0.5;
   color: var(--text-faint);
+}
+
+/* 折叠后的占位符（省略号）：飞书风淡化，去掉浅色背景 */
+.cm-foldPlaceholder {
+  background-color: var(--background-modifier-hover) !important;
+  border: 1px solid var(--background-modifier-border) !important;
+  color: var(--text-faint) !important;
+  border-radius: var(--radius-s);
+  padding: 0 4px;
+  font-size: 0.85em;
+}
+.theme-dark .cm-foldPlaceholder {
+  background-color: var(--background-modifier-hover) !important;
 }
 
 /* —— 标题：飞书字阶 + 字重 600 + H1 底部锚点 —— */
