@@ -849,6 +849,26 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* —— 标题折叠指示器：飞书风格默认隐藏，hover 标题时浮现 —— */
+/* 暗色下默认会显示成小灰块，飞书文档没有这种装饰 */
+.markdown-preview-view .heading-collapse-indicator,
+.markdown-preview-view .collapse-indicator,
+.markdown-source-view.mod-cm6 .collapse-indicator {
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+.markdown-preview-view h1:hover .heading-collapse-indicator,
+.markdown-preview-view h2:hover .heading-collapse-indicator,
+.markdown-preview-view h3:hover .heading-collapse-indicator,
+.markdown-preview-view h4:hover .heading-collapse-indicator,
+.markdown-preview-view h5:hover .heading-collapse-indicator,
+.markdown-preview-view h6:hover .heading-collapse-indicator,
+.markdown-source-view.mod-cm6 .HyperMD-header:hover .collapse-indicator,
+.markdown-source-view.mod-cm6 .cm-line.HyperMD-header:hover .collapse-indicator {
+  opacity: 0.5;
+  color: var(--text-faint);
+}
+
 /* —— 标题：飞书字阶 + 字重 600 + H1 底部锚点 —— */
 .markdown-preview-view h1,
 .markdown-preview-view h2,
