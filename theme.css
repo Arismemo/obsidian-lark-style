@@ -2194,6 +2194,113 @@ body.image-rounded-off .markdown-preview-view .image-embed img {
   margin-top: 16px;
 }
 
+/* ============================================================
+   大纲面板：飞书悬浮式风格（hover 展开 + 紧凑飞书视觉）
+   注意：这是 CSS hack，不是真正的悬浮窗口。效果是默认收窄半透明、
+   hover 时展开 + 不透明。需要用户把大纲放在右侧边栏。
+   ============================================================ */
+
+/* 默认收窄态：宽度收到 32px（只露出边缘条），半透明，浮动在内容上方 */
+.workspace-leaf-content[data-type="outline"] {
+  position: relative;
+}
+.workspace-leaf-content[data-type="outline"] .outline-tree {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 280px;
+  max-width: 280px;
+  background: var(--background-primary);
+  border-left: 1px solid var(--background-modifier-border);
+  box-shadow: var(--shadow-l);
+  opacity: 0;
+  transform: translateX(20px);
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 10;
+  padding: 8px;
+  overflow-y: auto;
+}
+
+/* hover 时展开 */
+.workspace-leaf-content[data-type="outline"]:hover .outline-tree,
+.workspace-leaf-content[data-type="outline"]:focus-within .outline-tree {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+/* 收起态的边缘指示条（让用户知道这里有大纲） */
+.workspace-leaf-content[data-type="outline"]::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 40px;
+  background: var(--accent-color);
+  opacity: 0.3;
+  border-radius: 3px 0 0 3px;
+  z-index: 11;
+}
+.workspace-leaf-content[data-type="outline"]:hover::after,
+.workspace-leaf-content[data-type="outline"]:focus-within::after {
+  opacity: 0;
+}
+
+/* 大纲项飞书化（复用目录树变量） */
+.outline-tree .tree-item-self {
+  border-radius: var(--nav-item-radius);
+  padding: var(--nav-item-padding);
+  transition: background 0.12s ease;
+}
+.outline-tree .tree-item-self:hover {
+  background: var(--nav-item-background-hover);
+}
+.outline-tree .tree-item-self.is-collapsed {
+  color: var(--text-muted);
+}
+/* 当前章节高亮（跟随滚动） */
+.outline-tree .tree-item-self.outline-item-current,
+.outline-tree .tree-item-self:has(.is-flashing) {
+  background: var(--nav-item-background-active);
+  color: var(--nav-item-color-active);
+}
+
+/* 大纲里的 chevron 也用飞书线性样式（复用目录树的规则结构） */
+.outline-tree .tree-item-icon.collapse-icon svg.svg-icon {
+  display: none;
+}
+.outline-tree .tree-item-icon.collapse-icon {
+  position: relative;
+}
+.outline-tree .tree-item-icon.collapse-icon::before {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  width: 10px;
+  height: 10px;
+  background-color: var(--feishu-tree-chevron);
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='9 18 15 12 9 6'/></svg>");
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='9 18 15 12 9 6'/></svg>");
+  mask-repeat: no-repeat;
+  mask-size: contain;
+}
+.outline-tree .tree-item:not(.is-collapsed) > .tree-item-self > .tree-item-icon.collapse-icon::before {
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+  mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+}
+
+/* 隐藏大纲的 nav-header（搜索/折叠按钮栏）——悬浮态不需要 */
+.workspace-leaf-content[data-type="outline"] .nav-header {
+  display: none;
+}
+
 /* —— Tooltip / Notice / 通知气泡：深底白字，保证对比度可读 —— */
 .tooltip {
   background: var(--background-modifier-message);
