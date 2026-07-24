@@ -2195,69 +2195,9 @@ body.image-rounded-off .markdown-preview-view .image-embed img {
 }
 
 /* ============================================================
-   大纲面板：飞书悬浮式风格（hover 展开 + 紧凑飞书视觉）
-   注意：这是 CSS hack，不是真正的悬浮窗口。效果是默认收窄半透明、
-   hover 时展开 + 不透明。需要用户把大纲放在右侧边栏。
-   真实 DOM：.workspace-leaf-content[data-type=outline] > .view-content > .tree-item
+   大纲面板：飞书风格视觉（hover/active/chevron）
+   保留正常的大纲项飞书化，不做悬浮 hack
    ============================================================ */
-
-/* 容器定位 */
-.workspace-leaf-content[data-type="outline"] {
-  position: relative;
-}
-
-/* 隐藏 nav-header（搜索/折叠按钮栏）——悬浮态不需要 */
-.workspace-leaf-content[data-type="outline"] .nav-header {
-  display: none;
-}
-
-/* 默认收窄态：view-content 浮动在右侧，半透明 + 偏移 + 禁用交互 */
-.workspace-leaf-content[data-type="outline"] .view-content {
-  position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  width: 280px;
-  max-width: 280px;
-  background: var(--background-primary);
-  border-left: 1px solid var(--background-modifier-border);
-  box-shadow: var(--shadow-l);
-  opacity: 0;
-  transform: translateX(20px);
-  pointer-events: none;
-  transition: opacity 0.2s ease, transform 0.2s ease;
-  z-index: 10;
-  padding: 8px;
-  overflow-y: auto;
-}
-
-/* hover 容器时展开 */
-.workspace-leaf-content[data-type="outline"]:hover .view-content,
-.workspace-leaf-content[data-type="outline"]:focus-within .view-content {
-  opacity: 1;
-  transform: translateX(0);
-  pointer-events: auto;
-}
-
-/* 收起态的边缘指示条（让用户知道这里有大纲） */
-.workspace-leaf-content[data-type="outline"]::after {
-  content: "";
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 3px;
-  height: 40px;
-  background: var(--accent-color);
-  opacity: 0.3;
-  border-radius: 3px 0 0 3px;
-  z-index: 11;
-  transition: opacity 0.2s ease;
-}
-.workspace-leaf-content[data-type="outline"]:hover::after,
-.workspace-leaf-content[data-type="outline"]:focus-within::after {
-  opacity: 0;
-}
 
 /* 大纲项飞书化（复用目录树变量） */
 .workspace-leaf-content[data-type="outline"] .tree-item-self {
