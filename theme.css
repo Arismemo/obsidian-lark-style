@@ -1587,6 +1587,46 @@ body.callout-notion .markdown-source-view.mod-cm6 .callout {
   border-radius: var(--radius-s);
 }
 
+/* 可折叠 Callout 交互体验优化 */
+.callout.is-collapsible .callout-title {
+  cursor: pointer;
+}
+.callout.is-collapsible .callout-title:hover {
+  opacity: 0.88;
+}
+
+/* —— HTML details / summary 折叠块样式（飞书卡片风） —— */
+details {
+  border-radius: var(--callout-radius, 6px);
+  border: 1px solid var(--border-color, #DEE0E3);
+  background: var(--background-secondary, #F5F6F7);
+  padding: 10px 14px;
+  margin: 14px 0;
+  transition: all 0.2s ease;
+}
+.theme-dark details {
+  border-color: #2F3136;
+  background: #23252A;
+}
+summary {
+  cursor: pointer;
+  font-weight: 500;
+  user-select: none;
+  outline: none;
+  color: var(--text-normal);
+}
+summary:hover {
+  color: var(--interactive-accent, #3370FF);
+}
+details[open] summary {
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px dashed var(--border-color, #DEE0E3);
+}
+.theme-dark details[open] summary {
+  border-bottom-color: #2F3136;
+}
+
 /* —— 水平线：实体色（飞书 grey-1），比半透明色更稳定 —— */
 .theme-light .markdown-preview-view hr {
   border: none;
