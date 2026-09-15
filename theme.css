@@ -564,7 +564,7 @@ body.theme-light.is-mobile {
   --callout-content-padding: 0;
   --callout-title-size: 0.95em;
   --callout-title-weight: 600;
-  --callout-blend-mode: multiply;  /* 嵌套 callout 颜色叠加 */
+  --callout-blend-mode: normal;
 
   /* —— 正文缩进引导线（飞书默认无，淡化到几乎不可见） —— */
   --indentation-guide-width: 1px;
@@ -817,7 +817,7 @@ body.theme-dark.is-mobile {
   --callout-content-padding: 0;
   --callout-title-size: 0.95em;
   --callout-title-weight: 600;
-  --callout-blend-mode: multiply;
+  --callout-blend-mode: normal;
 
   /* —— 正文缩进引导线（暗色） —— */
   --indentation-guide-width: 1px;
@@ -1450,6 +1450,8 @@ body.link-underline .markdown-source-view.mod-cm6 .cm-hmd-internal-link {
   background: color-mix(in srgb, var(--callout-color, var(--accent-color)) 8%, transparent);
   box-shadow: none;
   padding: var(--callout-padding);
+  mix-blend-mode: normal;
+  color: var(--text-normal);
 }
 .markdown-preview-view .callout .callout-title,
 .markdown-source-view.mod-cm6 .callout .callout-title {
@@ -1461,6 +1463,7 @@ body.link-underline .markdown-source-view.mod-cm6 .cm-hmd-internal-link {
 .markdown-preview-view .callout .callout-content,
 .markdown-source-view.mod-cm6 .callout .callout-content {
   padding: var(--callout-content-padding);
+  color: var(--text-normal);
 }
 /* 飞书语义色精确配置（覆盖 Obsidian 默认） */
 .markdown-preview-view .callout[data-callout="info"],
@@ -1468,6 +1471,10 @@ body.link-underline .markdown-source-view.mod-cm6 .cm-hmd-internal-link {
 .markdown-source-view.mod-cm6 .callout[data-callout="info"],
 .markdown-source-view.mod-cm6 .callout[data-callout="note"] {
   --callout-color: #0064FA;  /* semi blue-5 */
+}
+.markdown-preview-view .callout[data-callout="important"],
+.markdown-source-view.mod-cm6 .callout[data-callout="important"] {
+  --callout-color: #7B3DD9;  /* semi purple-5 */
 }
 .markdown-preview-view .callout[data-callout="success"],
 .markdown-preview-view .callout[data-callout="tip"],
@@ -1481,6 +1488,10 @@ body.link-underline .markdown-source-view.mod-cm6 .cm-hmd-internal-link {
 .markdown-source-view.mod-cm6 .callout[data-callout="warning"] {
   --callout-color: #FC8800;  /* semi orange-5 */
 }
+.markdown-preview-view .callout[data-callout="caution"],
+.markdown-source-view.mod-cm6 .callout[data-callout="caution"] {
+  --callout-color: #E03131;  /* semi red-orange */
+}
 .markdown-preview-view .callout[data-callout="danger"],
 .markdown-preview-view .callout[data-callout="error"],
 .markdown-preview-view .callout[data-callout="bug"],
@@ -1493,12 +1504,18 @@ body.link-underline .markdown-source-view.mod-cm6 .cm-hmd-internal-link {
 .theme-dark .markdown-preview-view .callout,
 .theme-dark .markdown-source-view.mod-cm6 .callout {
   background: color-mix(in srgb, var(--callout-color, var(--accent-color)) 14%, transparent);
+  mix-blend-mode: normal;
+  color: var(--text-normal);
 }
 .theme-dark .markdown-preview-view .callout[data-callout="info"],
 .theme-dark .markdown-preview-view .callout[data-callout="note"],
 .theme-dark .markdown-source-view.mod-cm6 .callout[data-callout="info"],
 .theme-dark .markdown-source-view.mod-cm6 .callout[data-callout="note"] {
   --callout-color: #54A9FF;
+}
+.theme-dark .markdown-preview-view .callout[data-callout="important"],
+.theme-dark .markdown-source-view.mod-cm6 .callout[data-callout="important"] {
+  --callout-color: #A773F7;
 }
 .theme-dark .markdown-preview-view .callout[data-callout="success"],
 .theme-dark .markdown-preview-view .callout[data-callout="tip"],
@@ -1511,6 +1528,10 @@ body.link-underline .markdown-source-view.mod-cm6 .cm-hmd-internal-link {
 .theme-dark .markdown-preview-view .callout[data-callout="warning"],
 .theme-dark .markdown-source-view.mod-cm6 .callout[data-callout="warning"] {
   --callout-color: #FFB14E;
+}
+.theme-dark .markdown-preview-view .callout[data-callout="caution"],
+.theme-dark .markdown-source-view.mod-cm6 .callout[data-callout="caution"] {
+  --callout-color: #FF7875;
 }
 .theme-dark .markdown-preview-view .callout[data-callout="danger"],
 .theme-dark .markdown-preview-view .callout[data-callout="error"],
