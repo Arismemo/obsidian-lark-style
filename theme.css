@@ -2129,7 +2129,8 @@ body.image-rounded-off .markdown-preview-view .image-embed img {
   text-align: center;
 }
 /* Live Preview 的 Mermaid 也去掉代码块样式 */
-.markdown-source-view.mod-cm6 .cm-embed-block:has(.mermaid) {
+.markdown-source-view.mod-cm6 .cm-embed-block:has(.mermaid),
+.markdown-source-view.mod-cm6 .cm-embed-block:has(.block-language-mermaid) {
   background: transparent;
   border: none;
 }
@@ -2486,29 +2487,53 @@ mark[class*="hl-"] {
 }
 
 /* ============================================================
-   H. Mermaid 架构与流程图表：飞书品牌色深度注入
+   H. Mermaid 架构与流程图表：飞书品牌色深度注入与暗色高对比适配
    ============================================================ */
+.block-language-mermaid,
 .mermaid {
   text-align: center;
   margin: 20px 0;
 }
+
+.theme-light .block-language-mermaid,
 .theme-light .mermaid {
   --mermaid-node-bg: #F5F7FA;
   --mermaid-node-stroke: #BBC0C7;
+  --mermaid-node-text: #1F2329;
   --mermaid-line: #646A73;
-  --mermaid-text: #1F2329;
+  --mermaid-edge-bg: #FFFFFF;
+  --mermaid-edge-text: #646A73;
+  --mermaid-cluster-bg: #F8F9FA;
+  --mermaid-cluster-stroke: #DEE0E3;
+  --mermaid-gate-bg: #EEF4FF;
+  --mermaid-gate-stroke: #3370FF;
 }
+
+.theme-dark .block-language-mermaid,
 .theme-dark .mermaid {
-  --mermaid-node-bg: #232329;
-  --mermaid-node-stroke: #4E525C;
-  --mermaid-line: #A8ABB3;
-  --mermaid-text: #F9F9F9;
+  --mermaid-node-bg: #272930;
+  --mermaid-node-stroke: #454954;
+  --mermaid-node-text: #F2F3F5;
+  --mermaid-line: #8F959E;
+  --mermaid-edge-bg: #1C1E22;
+  --mermaid-edge-text: #D0D3D8;
+  --mermaid-cluster-bg: #1E2024;
+  --mermaid-cluster-stroke: #383B42;
+  --mermaid-gate-bg: #1F2838;
+  --mermaid-gate-stroke: #3370FF;
 }
+
+.block-language-mermaid svg,
 .mermaid svg {
   max-width: 100%;
   height: auto;
   font-family: var(--font-interface-theme) !important;
 }
+
+/* 节点图形通用圆角与描边 */
+.block-language-mermaid .node rect,
+.block-language-mermaid .node circle,
+.block-language-mermaid .node polygon,
 .mermaid .node rect,
 .mermaid .node circle,
 .mermaid .node polygon {
@@ -2516,21 +2541,137 @@ mark[class*="hl-"] {
   ry: 6px;
   stroke-width: 1.5px !important;
 }
+
+/* —— 深色模式节点背景（覆盖 rect / polygon / circle / path / label-container） —— */
+.theme-dark .block-language-mermaid .node rect,
+.theme-dark .block-language-mermaid .node circle,
+.theme-dark .block-language-mermaid .node ellipse,
+.theme-dark .block-language-mermaid .node path,
+.theme-dark .block-language-mermaid .node .label-container,
 .theme-dark .mermaid .node rect,
-.theme-dark .mermaid .node polygon {
+.theme-dark .mermaid .node circle,
+.theme-dark .mermaid .node ellipse,
+.theme-dark .mermaid .node path,
+.theme-dark .mermaid .node .label-container {
   fill: var(--mermaid-node-bg) !important;
   stroke: var(--mermaid-node-stroke) !important;
 }
-.theme-dark .mermaid .node text {
-  fill: var(--mermaid-text) !important;
+
+/* 菱形决策节点 (Gate / Decision) 飞书微蓝高质感 */
+.theme-dark .block-language-mermaid .node polygon,
+.theme-dark .mermaid .node polygon {
+  fill: var(--mermaid-gate-bg) !important;
+  stroke: var(--mermaid-gate-stroke) !important;
 }
+
+.theme-light .block-language-mermaid .node polygon,
+.theme-light .mermaid .node polygon {
+  fill: var(--mermaid-gate-bg) !important;
+  stroke: var(--mermaid-gate-stroke) !important;
+}
+
+/* —— 深色模式节点文字（同时覆盖 SVG text 与 foreignObject HTML 文本，根除白底白字） —— */
+.theme-dark .block-language-mermaid .node text,
+.theme-dark .block-language-mermaid .node .nodeLabel,
+.theme-dark .block-language-mermaid .node .label,
+.theme-dark .block-language-mermaid .node foreignObject div,
+.theme-dark .block-language-mermaid .node foreignObject span,
+.theme-dark .block-language-mermaid .label text,
+.theme-dark .mermaid .node text,
+.theme-dark .mermaid .node .nodeLabel,
+.theme-dark .mermaid .node .label,
+.theme-dark .mermaid .node foreignObject div,
+.theme-dark .mermaid .node foreignObject span,
+.theme-dark .mermaid .label text {
+  color: var(--mermaid-node-text) !important;
+  fill: var(--mermaid-node-text) !important;
+  font-weight: 500 !important;
+}
+
+/* —— 浅色模式节点文字 —— */
+.theme-light .block-language-mermaid .node text,
+.theme-light .block-language-mermaid .node .nodeLabel,
+.theme-light .block-language-mermaid .node .label,
+.theme-light .block-language-mermaid .node foreignObject div,
+.theme-light .block-language-mermaid .node foreignObject span,
+.theme-light .mermaid .node text,
+.theme-light .mermaid .node .nodeLabel,
+.theme-light .mermaid .node .label,
+.theme-light .mermaid .node foreignObject div,
+.theme-light .mermaid .node foreignObject span {
+  color: var(--mermaid-node-text) !important;
+  fill: var(--mermaid-node-text) !important;
+  font-weight: 500 !important;
+}
+
+/* —— 连线与箭头 —— */
+.theme-dark .block-language-mermaid path.flowchart-link,
+.theme-dark .block-language-mermaid .edgePaths path,
+.theme-dark .block-language-mermaid .edgePath path,
 .theme-dark .mermaid path.flowchart-link,
-.theme-dark .mermaid .edgePaths path {
+.theme-dark .mermaid .edgePaths path,
+.theme-dark .mermaid .edgePath path {
   stroke: var(--mermaid-line) !important;
+  stroke-width: 1.5px !important;
 }
-.theme-dark .mermaid .marker {
+
+.theme-dark .block-language-mermaid .marker,
+.theme-dark .block-language-mermaid marker path,
+.theme-dark .mermaid .marker,
+.theme-dark .mermaid marker path {
   fill: var(--mermaid-line) !important;
   stroke: var(--mermaid-line) !important;
+}
+
+/* —— 连线文字微胶囊标签 —— */
+.theme-dark .block-language-mermaid .edgeLabel rect,
+.theme-dark .mermaid .edgeLabel rect {
+  fill: var(--mermaid-edge-bg) !important;
+  rx: 4px;
+  ry: 4px;
+}
+
+.theme-dark .block-language-mermaid .edgeLabel,
+.theme-dark .block-language-mermaid .edgeLabel text,
+.theme-dark .block-language-mermaid .edgeLabel .edgeLabel,
+.theme-dark .block-language-mermaid .edgeLabel foreignObject div,
+.theme-dark .block-language-mermaid .edgeLabel foreignObject span,
+.theme-dark .mermaid .edgeLabel,
+.theme-dark .mermaid .edgeLabel text,
+.theme-dark .mermaid .edgeLabel .edgeLabel,
+.theme-dark .mermaid .edgeLabel foreignObject div,
+.theme-dark .mermaid .edgeLabel foreignObject span {
+  color: var(--mermaid-edge-text) !important;
+  fill: var(--mermaid-edge-text) !important;
+}
+
+.theme-light .block-language-mermaid .edgeLabel,
+.theme-light .block-language-mermaid .edgeLabel text,
+.theme-light .block-language-mermaid .edgeLabel foreignObject div,
+.theme-light .block-language-mermaid .edgeLabel foreignObject span,
+.theme-light .mermaid .edgeLabel,
+.theme-light .mermaid .edgeLabel text,
+.theme-light .mermaid .edgeLabel foreignObject div,
+.theme-light .mermaid .edgeLabel foreignObject span {
+  color: var(--mermaid-edge-text) !important;
+  fill: var(--mermaid-edge-text) !important;
+}
+
+/* —— 子图（Cluster / Subgraph） —— */
+.theme-dark .block-language-mermaid .cluster rect,
+.theme-dark .mermaid .cluster rect {
+  fill: var(--mermaid-cluster-bg) !important;
+  stroke: var(--mermaid-cluster-stroke) !important;
+  rx: 8px;
+  ry: 8px;
+}
+.theme-dark .block-language-mermaid .cluster text,
+.theme-dark .block-language-mermaid .cluster .nodeLabel,
+.theme-dark .mermaid .cluster text,
+.theme-dark .mermaid .cluster .nodeLabel {
+  color: var(--mermaid-node-text) !important;
+  fill: var(--mermaid-node-text) !important;
+  font-weight: 600 !important;
 }
 
 /* ============================================================
