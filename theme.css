@@ -2523,6 +2523,14 @@ mark[class*="hl-"] {
   --mermaid-gate-stroke: #3370FF;
 }
 
+/* 彻底禁用 Obsidian 内置反转滤镜（其 invert(100%) 会将纯白文字反转成纯黑） */
+.theme-dark .block-language-mermaid > svg,
+.theme-dark .block-language-mermaid svg,
+.theme-dark .mermaid > svg,
+.theme-dark .mermaid svg {
+  filter: none !important;
+}
+
 .block-language-mermaid svg,
 .mermaid svg {
   max-width: 100%;
@@ -2542,7 +2550,7 @@ mark[class*="hl-"] {
   stroke-width: 1.5px !important;
 }
 
-/* —— 深色模式节点背景（覆盖 rect / polygon / circle / path / label-container） —— */
+/* —— 节点背景（纯白卡片底色，清晰易读） —— */
 .theme-dark .block-language-mermaid .node rect,
 .theme-dark .block-language-mermaid .node circle,
 .theme-dark .block-language-mermaid .node ellipse,
@@ -2553,15 +2561,16 @@ mark[class*="hl-"] {
 .theme-dark .mermaid .node ellipse,
 .theme-dark .mermaid .node path,
 .theme-dark .mermaid .node .label-container {
-  fill: var(--mermaid-node-bg) !important;
-  stroke: var(--mermaid-node-stroke) !important;
+  fill: #FFFFFF !important;
+  stroke: #D0D3D8 !important;
 }
 
-/* 菱形决策节点 (Gate / Decision) 飞书微蓝高质感 */
+/* 菱形决策节点 (Gate / Decision) 飞书蓝描边白底卡片 */
 .theme-dark .block-language-mermaid .node polygon,
 .theme-dark .mermaid .node polygon {
-  fill: var(--mermaid-gate-bg) !important;
-  stroke: var(--mermaid-gate-stroke) !important;
+  fill: #FFFFFF !important;
+  stroke: #3370FF !important;
+  stroke-width: 2px !important;
 }
 
 .theme-light .block-language-mermaid .node polygon,
@@ -2570,7 +2579,7 @@ mark[class*="hl-"] {
   stroke: var(--mermaid-gate-stroke) !important;
 }
 
-/* —— 深色模式节点文字（同时覆盖 SVG text 与 foreignObject HTML 文本，根除白底白字） —— */
+/* —— 节点文字（飞书深黑字，高对比度绝对清晰） —— */
 .theme-dark .block-language-mermaid .node text,
 .theme-dark .block-language-mermaid .node .nodeLabel,
 .theme-dark .block-language-mermaid .node .label,
@@ -2583,8 +2592,8 @@ mark[class*="hl-"] {
 .theme-dark .mermaid .node foreignObject div,
 .theme-dark .mermaid .node foreignObject span,
 .theme-dark .mermaid .label text {
-  color: var(--mermaid-node-text) !important;
-  fill: var(--mermaid-node-text) !important;
+  color: #1F2329 !important;
+  fill: #1F2329 !important;
   font-weight: 500 !important;
 }
 
@@ -2626,27 +2635,43 @@ mark[class*="hl-"] {
 /* —— 连线文字：彻底隐藏所有背景色块（根除白斑与截断横条） —— */
 .block-language-mermaid .edgeLabel rect,
 .block-language-mermaid .edgeLabels rect,
+.block-language-mermaid .edgeLabel polygon,
+.block-language-mermaid .edgeLabels polygon,
 .mermaid .edgeLabel rect,
-.mermaid .edgeLabels rect {
+.mermaid .edgeLabels rect,
+.mermaid .edgeLabel polygon,
+.mermaid .edgeLabels polygon {
   display: none !important;
   fill: transparent !important;
   stroke: none !important;
   opacity: 0 !important;
 }
 
-/* —— 深色模式：连线文字纯白清晰高亮（黑底纯白字，无背景框） —— */
+/* —— 深色主题：连线文字纯白悬浮（黑底纯白字，无背景框） —— */
 .theme-dark .block-language-mermaid .edgeLabel,
 .theme-dark .block-language-mermaid .edgeLabels,
 .theme-dark .block-language-mermaid .edgeLabel *,
 .theme-dark .block-language-mermaid .edgeLabels *,
+.theme-dark .block-language-mermaid .edgePath + .edgeLabel,
+.theme-dark .block-language-mermaid g.edgeLabel,
+.theme-dark .block-language-mermaid g.edgeLabel *,
+.theme-dark .block-language-mermaid .edgeLabel foreignObject,
+.theme-dark .block-language-mermaid .edgeLabel foreignObject *,
+.theme-dark .block-language-mermaid span.edgeLabel,
 .theme-dark .block-language-mermaid .messageText,
 .theme-dark .mermaid .edgeLabel,
 .theme-dark .mermaid .edgeLabels,
 .theme-dark .mermaid .edgeLabel *,
 .theme-dark .mermaid .edgeLabels *,
+.theme-dark .mermaid g.edgeLabel,
+.theme-dark .mermaid g.edgeLabel *,
+.theme-dark .mermaid .edgeLabel foreignObject,
+.theme-dark .mermaid .edgeLabel foreignObject *,
+.theme-dark .mermaid span.edgeLabel,
 .theme-dark .mermaid .messageText {
   color: #FFFFFF !important;
   fill: #FFFFFF !important;
+  stroke: none !important;
   background: transparent !important;
   background-color: transparent !important;
   border: none !important;
@@ -2656,19 +2681,31 @@ mark[class*="hl-"] {
   opacity: 1 !important;
 }
 
-/* —— 浅色模式：连线文字清晰纯黑 —— */
+/* —— 浅色主题：连线文字深黑悬浮（白底深黑字，无背景框） —— */
 .theme-light .block-language-mermaid .edgeLabel,
 .theme-light .block-language-mermaid .edgeLabels,
 .theme-light .block-language-mermaid .edgeLabel *,
 .theme-light .block-language-mermaid .edgeLabels *,
+.theme-light .block-language-mermaid .edgePath + .edgeLabel,
+.theme-light .block-language-mermaid g.edgeLabel,
+.theme-light .block-language-mermaid g.edgeLabel *,
+.theme-light .block-language-mermaid .edgeLabel foreignObject,
+.theme-light .block-language-mermaid .edgeLabel foreignObject *,
+.theme-light .block-language-mermaid span.edgeLabel,
 .theme-light .block-language-mermaid .messageText,
 .theme-light .mermaid .edgeLabel,
 .theme-light .mermaid .edgeLabels,
 .theme-light .mermaid .edgeLabel *,
 .theme-light .mermaid .edgeLabels *,
+.theme-light .mermaid g.edgeLabel,
+.theme-light .mermaid g.edgeLabel *,
+.theme-light .mermaid .edgeLabel foreignObject,
+.theme-light .mermaid .edgeLabel foreignObject *,
+.theme-light .mermaid span.edgeLabel,
 .theme-light .mermaid .messageText {
   color: #1F2329 !important;
   fill: #1F2329 !important;
+  stroke: none !important;
   background: transparent !important;
   background-color: transparent !important;
   border: none !important;
