@@ -7,13 +7,15 @@ An Obsidian theme inspired by the visual design language of Lark (飞书) docume
 ## ✨ Features
 
 - **Light + Dark mode** with accurate Lark color palette (`#1F2329` text, `#1456F0`/`#54A9FF` accent, Semi Design neutrals)
-- **14px base font size** with PingFang SC + Inter font stack (matches Lark's desktop baseline)
+- **Typography measured from live Lark docs**: 16px body / 26px line height, system font stack (-apple-system / PingFang SC), 820px content width, 8px block spacing
 - **File tree**: linear chevron indicators, single-color gray icons, translucent overlay hover/active, brand-blue selected state — matches Lark doc sidebar
 - **Code blocks**: GitHub Primer syntax highlighting, consistent between Reading and Live Preview modes
-- **Tables**: tight Lark-style padding (8/12px), unified header background, no zebra stripes
-- **Callouts**: Lark Banner style (tinted background + 1px same-color border, 3px radius — not the Notion left-bar style)
-- **Quotes**: neutral gray left border + transparent background (visually distinct from callouts)
-- **Headings**: Lark document scale (H1=24/H2=20/H3=18/H4=16) with H1 anchor underline
+- **Tables**: Lark header `#F5F6F7` + grid `#DEE0E3`, tight padding (8/12px), no zebra stripes
+- **Callouts**: Lark highlight-block style (solid light background + lighter same-hue border, 8px radius, 16px padding, title stays body color, only the icon is tinted). All Obsidian callout types mapped, consistent in Reading and Live Preview
+- **Quotes**: Lark quote — 2px gray left bar + secondary text color, no background
+- **Lists**: nested ordered lists step `1.` → `a.` → `i.`
+- **Lark text & background colors**: 7 text colors (`fc-*`) + 14 background colors (`hl-*` / `hl-*-strong`), see below
+- **Headings**: Lark document scale (title 34 / H1 26 / H2 22 / H3 20 / H4 18), weight 500, -0.02em tracking; optional H1 bottom line
 - **Compact UI**: 6px scrollbars, semi-transparent tooltip/notice with high-contrast text
 - **[Style Settings](https://github.com/mgmeyers/obsidian-style-settings) support**: tunable accent color, corner radius, font size, line height, card layout
 
@@ -57,10 +59,33 @@ This theme supports the [Style Settings](https://github.com/mgmeyers/obsidian-st
 
 - Accent color (Lark brand blue / Semi primary blue / custom)
 - Corner radius density (compact 3px / standard 6px / loose 8px)
-- Body font size (13–17px)
-- Line height (1.4–1.9)
+- Body font size (13–18px, default 16)
+- Line height (1.4–1.9, default 1.625)
+- Heading weight (400–700, default 500)
+- Editor width (default 820px, takes effect with Obsidian's "Readable line length")
 - Card layout mode (adds document-style margins)
 - Always-underline links toggle
+
+## 🖍 Lark text / background colors
+
+```html
+<span class="fc-red">red text</span>
+<mark class="hl-blue">light blue background</mark>
+<mark class="hl-orange-strong">strong orange background</mark>
+```
+
+Colors: `red` / `orange` / `yellow` / `green` / `blue` / `purple` / `grey`.
+
+## 🗒 Changelog
+
+### 1.1.0
+- Typography re-aligned to measured Lark doc values: 16px / 1.625 body, 26/22/20/18 headings at weight 500, 34px doc title, 820px width, 8px paragraph spacing; Inter removed from font stack
+- H1 bottom line is now off by default (Style Settings: "Show H1 Bottom Line")
+- Callouts rebuilt as Lark highlight blocks; fixed `check` / `done` / `bug` etc. missing colors in Live Preview
+- Quote, inline code, code block, table restyled to Lark values; quote now identical in Live Preview
+- Added Lark 7 text colors + 14 background colors; nested ordered list markers
+- Card mode shadow now applies in Live Preview too
+- Unified brand blue (removed stray `#3370FF`), removed duplicated tab variables
 
 ## 📝 Credits
 

@@ -2,6 +2,7 @@
    Feishu Theme for Obsidian
    基于飞书（Feishu / Lark）设计语言 + Semi Design 设计令牌
    色板取自 @douyinfe/semi-theme-default v2.101.0 官方源
+   排版数值实测自飞书云文档（正文 16/26、标题 26/22/20/18、版心 820px）
    支持：浅色 + 暗色双模式 / Style Settings 可视化配置
    ============================================================ */
 
@@ -53,7 +54,7 @@ settings:
     type: variable-themed-color
     opacity: false
     format: hex
-    default-light: '#F6F8FA'
+    default-light: '#F5F6F7'
     default-dark: '#161B22'
 
   # ===== 排版 =====
@@ -69,9 +70,9 @@ settings:
     title: Body Font Size
     title.zh: 正文字号
     type: variable-number-slider
-    default: 14
+    default: 16
     min: 13
-    max: 17
+    max: 18
     step: 1
     format: px
   -
@@ -79,17 +80,17 @@ settings:
     title: Line Height
     title.zh: 行高
     type: variable-number-slider
-    default: 1.5
+    default: 1.625
     min: 1.4
     max: 1.9
-    step: 0.05
+    step: 0.025
   -
     id: font-text-theme
     title: Text Font Family
     title.zh: 正文字体栈
     description: 用引号包裹字体名，逗号分隔
     type: variable-text
-    default: '"Inter", -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif'
+    default: '-apple-system, BlinkMacSystemFont, "Helvetica Neue", Tahoma, "PingFang SC", "Microsoft YaHei", Arial, "Hiragino Sans GB", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"'
   -
     id: font-monospace-theme
     title: Code Font Family
@@ -110,41 +111,51 @@ settings:
     title: H1 Size
     title.zh: H1 字号
     type: variable-number-slider
-    default: 1.71
-    min: 1.4
+    default: 1.625
+    min: 1.3
     max: 2.4
-    step: 0.01
+    step: 0.025
     format: em
   -
     id: h2-size
     title: H2 Size
     title.zh: H2 字号
     type: variable-number-slider
-    default: 1.43
-    min: 1.2
+    default: 1.375
+    min: 1.1
     max: 2.0
-    step: 0.01
+    step: 0.025
     format: em
   -
     id: h3-size
     title: H3 Size
     title.zh: H3 字号
     type: variable-number-slider
-    default: 1.29
-    min: 1.1
+    default: 1.25
+    min: 1.0
     max: 1.8
-    step: 0.01
+    step: 0.025
     format: em
   -
     id: h4-size
     title: H4 Size
     title.zh: H4 字号
     type: variable-number-slider
-    default: 1.14
+    default: 1.125
     min: 1.0
     max: 1.6
-    step: 0.01
+    step: 0.025
     format: em
+  -
+    id: heading-weight
+    title: Heading Weight
+    title.zh: 标题字重
+    description: 飞书云文档为 500（Medium），想更粗可调到 600
+    type: variable-number-slider
+    default: 500
+    min: 400
+    max: 700
+    step: 100
 
   # ===== 布局 =====
   -
@@ -181,8 +192,9 @@ settings:
     id: line-width-adaptive
     title: Editor Line Width
     title.zh: 编辑区宽度
+    description: 飞书云文档正文宽度为 820px（需开启 Obsidian「缩减栏宽」）
     type: variable-number-slider
-    default: 900
+    default: 820
     min: 700
     max: 1200
     step: 20
@@ -203,10 +215,10 @@ settings:
     description: 默认仅 hover 显示，开启后常显
     type: class-toggle
   -
-    id: h1-anchor-off
-    title: Hide H1 Anchor Line
-    title.zh: 隐藏 H1 底部锚点线
-    description: 飞书 H1 默认有底部细线，开启此项则隐藏
+    id: h1-anchor-on
+    title: Show H1 Bottom Line
+    title.zh: 显示 H1 底部分隔线
+    description: 飞书云文档 H1 无底线（默认），开启此项为 H1 加 1px 底部分隔线
     type: class-toggle
   -
     id: feishu-chevron-off
@@ -232,15 +244,17 @@ settings:
    B. 共享参数（与明暗无关）
    ============================================================ */
 body {
-  /* —— 字体栈：飞书 / Semi Design 官方字体 —— */
-  --font-interface-theme: "Inter", -apple-system, BlinkMacSystemFont,
-                           "PingFang SC", "Hiragino Sans GB",
-                           "Microsoft YaHei", "Segoe UI", "Helvetica Neue",
-                           Helvetica, Arial, sans-serif;
-  --font-text-theme: "Inter", -apple-system, BlinkMacSystemFont,
-                      "PingFang SC", "Hiragino Sans GB",
-                      "Microsoft YaHei", "Segoe UI", "Helvetica Neue",
-                      Helvetica, Arial, sans-serif;
+  /* —— 字体栈：与飞书云文档实测一致（系统字体优先，不引入 Inter） —— */
+  --font-interface-theme: -apple-system, BlinkMacSystemFont, "Helvetica Neue",
+                           Tahoma, "PingFang SC", "Microsoft YaHei", Arial,
+                           "Hiragino Sans GB", sans-serif,
+                           "Apple Color Emoji", "Segoe UI Emoji",
+                           "Segoe UI Symbol", "Noto Color Emoji";
+  --font-text-theme: -apple-system, BlinkMacSystemFont, "Helvetica Neue",
+                      Tahoma, "PingFang SC", "Microsoft YaHei", Arial,
+                      "Hiragino Sans GB", sans-serif,
+                      "Apple Color Emoji", "Segoe UI Emoji",
+                      "Segoe UI Symbol", "Noto Color Emoji";
   --font-monospace-theme: "SF Mono", "JetBrains Mono", "Menlo",
                           "Consolas", "Liberation Mono", monospace;
   --font-editor-theme: var(--font-text-theme);
@@ -256,22 +270,30 @@ body {
   --checkbox-radius: 3px;
   --clickable-icon-radius: 4px;
 
-  /* —— 排版尺度（飞书桌面基准：正文 14px / 1.5 行高） —— */
-  --base-font-size: 14px;
-  --line-height: 1.5;
-  /* 飞书云文档字阶：H1=24/H2=20/H3=18/H4=16/H5=14/H6=13（基准 14px） */
-  --h1-size: 1.71em;   /* ≈24px 飞书 heading-1 */
-  --h2-size: 1.43em;   /* ≈20px 飞书 heading-2 */
-  --h3-size: 1.29em;   /* ≈18px 飞书 heading-3 */
-  --h4-size: 1.14em;   /* ≈16px 飞书 heading-4 */
-  --h5-size: 1.00em;   /* =14px 正文同档 */
-  --h6-size: 0.93em;   /* ≈13px 比正文小一档 */
+  /* —— 排版尺度（飞书云文档实测：正文 16px / 行高 26px ≈ 1.625） —— */
+  --base-font-size: 16px;
+  --line-height: 1.625;
+  /* 飞书云文档字阶：H1=26/H2=22/H3=20/H4=18/H5=16/H6=16（基准 16px） */
+  --h1-size: 1.625em;  /* 26px */
+  --h2-size: 1.375em;  /* 22px */
+  --h3-size: 1.25em;   /* 20px */
+  --h4-size: 1.125em;  /* 18px */
+  --h5-size: 1em;      /* 16px */
+  --h6-size: 1em;      /* 16px */
+  --heading-weight: 500;          /* 飞书标题 Medium */
+  --heading-line-height: 1.4;
+  --heading-letter-spacing: -0.02em;
 
-  --line-width-adaptive: 900px;
+  /* —— 版心：飞书云文档正文宽 820px —— */
+  --line-width-adaptive: 820px;
+  --file-line-width: var(--line-width-adaptive);  /* Obsidian 官方「缩减栏宽」变量 */
   --line-width-wide: 1100px;
-  --max-width: 900px;
+  --max-width: var(--line-width-adaptive);
   --nested-padding: 16px;
   --folding-offset: 16px;
+
+  /* —— 块间距：飞书段落块间距 8px —— */
+  --p-spacing: 8px;
 
   --tag-radius: 9999px;  /* tag 胶囊形 */
 
@@ -294,17 +316,20 @@ body.radius-density-loose {
   --radius-xl: 20px;
 }
 
-/* 卡片化模式：编辑区加内边距 + 浅阴影（飞书文档观感） */
+/* 卡片化模式：编辑区加内边距 + 浅阴影（飞书文档观感），阅读 / 编辑两种模式一致 */
 body.card-mode .markdown-preview-view,
 body.card-mode .markdown-source-view.mod-cm6 .cm-editor {
   max-width: var(--line-width-adaptive);
   margin: 24px auto;
   padding: 32px 48px;
+  border-radius: var(--radius-l);
 }
-body.theme-dark.card-mode .markdown-preview-view {
+body.theme-dark.card-mode .markdown-preview-view,
+body.theme-dark.card-mode .markdown-source-view.mod-cm6 .cm-editor {
   box-shadow: 0 0 0 1px rgba(255,255,255,0.08), 0 2px 12px rgba(0,0,0,0.3);
 }
-body.theme-light.card-mode .markdown-preview-view {
+body.theme-light.card-mode .markdown-preview-view,
+body.theme-light.card-mode .markdown-source-view.mod-cm6 .cm-editor {
   box-shadow: 0 0 1px rgba(0,0,0,0.08), 0 2px 12px rgba(0,0,0,0.04);
 }
 
@@ -396,7 +421,8 @@ body.theme-light.is-mobile {
   --h6-color: #6B7075;
   --strong-color: #1C1F23;
   --em-color: #1C1F23;
-  --quote-color: #555B61;
+  --quote-color: #646A73;             /* 飞书引用文字：二级正文色 */
+  --quote-bar-color: #BBBFC4;         /* 飞书引用竖线 */
 
   /* —— 交互控件 —— */
   --interactive-normal: #FFFFFF;
@@ -412,8 +438,8 @@ body.theme-light.is-mobile {
   --toggle-thumb-enabled-color: #FFFFFF;
 
   /* —— 代码块（GitHub Light 配色，专业易读） —— */
-  --code-background: #F6F8FA;
-  --code-block-background: #F6F8FA;
+  --code-background: #F5F6F7;          /* 飞书代码块底色 */
+  --code-block-background: #F5F6F7;
   --code-normal: #24292F;
   --code-comment: #6E7781;
   --code-function: #8250DF;
@@ -556,10 +582,10 @@ body.theme-light.is-mobile {
   --prompt-radius: 8px;
 
   /* —— Callout 官方变量（让用户可在 Style Settings 调） —— */
-  --callout-radius: 3px;
+  --callout-radius: 8px;               /* 飞书高亮块实测 8px */
   --callout-border-width: 1px;
   --callout-border-opacity: 1;
-  --callout-padding: 12px 16px;
+  --callout-padding: 16px;
   --callout-title-padding: 0 0 8px 0;
   --callout-content-padding: 0;
   --callout-title-size: 0.95em;
@@ -573,8 +599,6 @@ body.theme-light.is-mobile {
 
   /* —— Tabs 补全缺失变量 —— */
   --tab-divider-color: var(--background-modifier-border);
-  --tab-font-size: 14px;
-  --tab-font-weight: 500;
   --tab-outline-color: transparent;
   --tab-curve: 0;
 }
@@ -665,7 +689,8 @@ body.theme-dark.is-mobile {
   --h6-color: #A0A3AB;
   --strong-color: #FFFFFF;
   --em-color: #F9F9F9;
-  --quote-color: #C8CAD0;
+  --quote-color: rgba(249, 249, 249, 0.70);
+  --quote-bar-color: #4F5159;
 
   /* —— 交互控件 —— */
   --interactive-normal: #232329;
@@ -778,6 +803,9 @@ body.theme-dark.is-mobile {
   --tab-text-color: var(--text-muted);
   --tab-text-color-active: var(--accent-color);
   --tab-text-color-focused: var(--text-normal);
+  --tab-font-size: 14px;
+  --tab-font-weight: 500;
+  --tab-font-weight-active: 600;
   --tab-radius: 6px;
   --tab-container-background: transparent;
   --tab-outline-width: 0px;
@@ -809,10 +837,10 @@ body.theme-dark.is-mobile {
   --prompt-radius: 8px;
 
   /* —— Callout 官方变量（暗色） —— */
-  --callout-radius: 3px;
+  --callout-radius: 8px;               /* 飞书高亮块实测 8px */
   --callout-border-width: 1px;
   --callout-border-opacity: 1;
-  --callout-padding: 12px 16px;
+  --callout-padding: 16px;
   --callout-title-padding: 0 0 8px 0;
   --callout-content-padding: 0;
   --callout-title-size: 0.95em;
@@ -826,8 +854,6 @@ body.theme-dark.is-mobile {
 
   /* —— Tabs 补全 —— */
   --tab-divider-color: var(--background-modifier-border);
-  --tab-font-size: 14px;
-  --tab-font-weight: 500;
   --tab-outline-color: transparent;
   --tab-curve: 0;
 }
@@ -838,12 +864,12 @@ body.theme-dark.is-mobile {
 
 /* —— 正文字号 / 行高（Style Settings 可调） —— */
 body {
-  --font-default-size: var(--base-font-size, 14px);
+  --font-default-size: var(--base-font-size, 16px);
 }
 .markdown-preview-view,
 .markdown-source-view.mod-cm6 {
-  font-size: var(--base-font-size, 14px);
-  line-height: var(--line-height, 1.5);
+  font-size: var(--base-font-size, 16px);
+  line-height: var(--line-height, 1.625);
   font-family: var(--font-text-theme);
   color: var(--text-normal);
   -webkit-font-smoothing: antialiased;
@@ -888,7 +914,7 @@ body {
   background-color: var(--background-modifier-hover) !important;
 }
 
-/* —— 标题：飞书字阶 + 字重 600 + H1 底部锚点 —— */
+/* —— 标题：飞书字阶 26/22/20/18/16 + 字重 500 + 行高 1.4 + 负字距 —— */
 .markdown-preview-view h1,
 .markdown-preview-view h2,
 .markdown-preview-view h3,
@@ -907,10 +933,10 @@ body {
 .markdown-source-view.mod-cm6 .HyperMD-header-4,
 .markdown-source-view.mod-cm6 .HyperMD-header-5,
 .markdown-source-view.mod-cm6 .HyperMD-header-6 {
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  font-weight: var(--heading-weight, 500);
+  letter-spacing: var(--heading-letter-spacing, -0.02em);
   border-bottom: none;
-  line-height: 1.4;
+  line-height: var(--heading-line-height, 1.4);
 }
 /* 字号 + 颜色引用变量。
    只作用于 .HyperMD-header-N（行容器），不作用于 .cm-header-N（内层 span）——
@@ -919,21 +945,19 @@ body {
 .markdown-source-view.mod-cm6 .HyperMD-header-1 {
   font-size: var(--h1-size);
   color: var(--h1-color);
-  margin: 28px 0 12px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid var(--background-modifier-border);  /* 飞书 H1 锚点 */
+  margin: 26px 0 10px;   /* 飞书 H1 块：上 ≈1em / 下 10px */
 }
-/* Style Settings 开关：用户开启 .h1-anchor-off 时移除锚点 */
-body.h1-anchor-off .markdown-preview-view h1,
-body.h1-anchor-off .markdown-source-view.mod-cm6 .HyperMD-header-1 {
-  padding-bottom: 0;
-  border-bottom: none;
+/* Style Settings 开关：开启 .h1-anchor-on 时为 H1 加底部分隔线（飞书默认无） */
+body.h1-anchor-on .markdown-preview-view h1,
+body.h1-anchor-on .markdown-source-view.mod-cm6 .HyperMD-header-1 {
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--background-modifier-border);
 }
 .markdown-preview-view h2,
 .markdown-source-view.mod-cm6 .HyperMD-header-2 {
   font-size: var(--h2-size);
   color: var(--h2-color);
-  margin: 24px 0 10px;
+  margin: 22px 0 8px;    /* 飞书 H2 块实测：上 22px / 下 8px */
 }
 .markdown-preview-view h3,
 .markdown-source-view.mod-cm6 .HyperMD-header-3 {
@@ -945,26 +969,26 @@ body.h1-anchor-off .markdown-source-view.mod-cm6 .HyperMD-header-1 {
 .markdown-source-view.mod-cm6 .HyperMD-header-4 {
   font-size: var(--h4-size);
   color: var(--h4-color);
-  margin: 16px 0 6px;
+  margin: 18px 0 8px;
 }
 .markdown-preview-view h5,
 .markdown-source-view.mod-cm6 .HyperMD-header-5 {
   font-size: var(--h5-size);
   color: var(--h5-color);
-  margin: 16px 0 6px;
+  margin: 16px 0 8px;
 }
 .markdown-preview-view h6,
 .markdown-source-view.mod-cm6 .HyperMD-header-6 {
   font-size: var(--h6-size);
   color: var(--h6-color);
-  margin: 16px 0 6px;
+  margin: 16px 0 8px;
 }
 
-/* 段落 margin + 行高引用变量 + 长词防御 */
+/* 段落：飞书文本块间距 8px + 行高引用变量 + 长词防御 */
 .markdown-preview-view p,
 .markdown-preview-view .el-p > p {
-  margin: 12px 0;
-  line-height: var(--line-height, 1.5);
+  margin: var(--p-spacing, 8px) 0;
+  line-height: var(--line-height, 1.625);
   overflow-wrap: anywhere;
 }
 
@@ -994,27 +1018,28 @@ body.link-underline .markdown-source-view.mod-cm6 .cm-hmd-internal-link {
   text-underline-offset: 3px;
 }
 
-/* —— 引用块：中性灰左条 + 飞书微底色圆角卡片 —— */
+/* —— 引用块：飞书引用 = 2px 灰色左竖线 + 次级文字色，无底色 —— */
 .markdown-preview-view blockquote {
-  border-left: 3px solid var(--color-base-50, #8F959E);
-  background: color-mix(in srgb, var(--text-normal) 4%, transparent);
-  border-radius: 0 var(--radius-s) var(--radius-s) 0;
-  padding: 8px 16px;
-  margin: 14px 0;
-  color: var(--text-normal);
+  border-left: 2px solid var(--quote-bar-color);
+  background: transparent;
+  border-radius: 0;
+  padding: 0 0 0 12px;
+  margin: var(--p-spacing, 8px) 0;
+  color: var(--quote-color);
 }
 .markdown-preview-view blockquote p {
   margin: 4px 0;
 }
 
-/* —— 内联 code：fill-0 背景 + 正文色 + 呼吸弹性间距 —— */
-.markdown-preview-view code,
+/* —— 内联 code：飞书行内代码 = 浅灰底 + 1px 细描边 + 4px 圆角 + 正文色 —— */
+.markdown-preview-view :not(pre) > code,
 .markdown-source-view.mod-cm6 .cm-inline-code {
   background: var(--background-modifier-hover);
-  border-radius: var(--radius-s);
-  padding: 2px 6px;
-  margin: 0 3px;
-  font-size: 0.88em;
+  box-shadow: inset 0 0 0 1px var(--background-modifier-border);
+  border-radius: 4px;
+  padding: 1px 4px;
+  margin: 0 2px;
+  font-size: 0.875em;
   font-family: var(--font-monospace-theme);
   color: var(--text-normal);
   border: none;
@@ -1046,7 +1071,7 @@ body.link-underline .markdown-source-view.mod-cm6 .cm-hmd-internal-link {
   padding: 28px 18px 14px 18px;          /* 顶部留足 28px 空间，彻底规避语言标与复制按钮遮挡首行长代码 */
   overflow-x: auto;
   margin: 16px 0;
-  box-shadow: var(--shadow-s);
+  box-shadow: none;                      /* 飞书代码块：平铺无阴影 */
   position: relative;
 }
 
@@ -1080,7 +1105,7 @@ body.link-underline .markdown-source-view.mod-cm6 .cm-hmd-internal-link {
   border-bottom-right-radius: var(--radius-m);
   margin-bottom: 16px;
   padding-bottom: 14px;        /* 与 pre 的 padding-bottom 对齐 */
-  box-shadow: var(--shadow-s);
+  box-shadow: none;
 }
 /* 4) 活动行高亮不破坏整体背景 */
 .cm-s-obsidian .cm-active.HyperMD-codeblock {
@@ -1203,21 +1228,21 @@ body.link-underline .markdown-source-view.mod-cm6 .cm-hmd-internal-link {
   font-weight: 600;
 }
 .markdown-source-view.mod-cm6 .cm-quote {
-  color: var(--text-normal);  /* 与阅读模式 blockquote 一致 */
+  color: var(--quote-color);  /* 与阅读模式 blockquote 一致 */
 }
-/* 编辑模式引用块：加左边框（CodeMirror 行模型用 ::before 模拟） */
+/* 编辑模式引用块：加左边框（CodeMirror 行模型用 ::before 模拟），参数与阅读模式一致 */
 .markdown-source-view.mod-cm6 .HyperMD-quote {
-  padding-left: 16px;
+  padding-left: 14px;
   position: relative;
 }
 .markdown-source-view.mod-cm6 .HyperMD-quote::before {
   content: "";
   position: absolute;
   left: 0;
-  top: 2px;
-  bottom: 2px;
-  width: 3px;
-  background: var(--color-base-50, #6B7075);
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--quote-bar-color);
   border-radius: 0;
 }
 
@@ -1384,9 +1409,9 @@ body.link-underline .markdown-source-view.mod-cm6 .cm-hmd-internal-link {
    阅读模式 + 编辑模式（Advanced Tables）共用同一组变量
    ============================================================ */
 .theme-light {
-  --table-header-background: #F2F3F5;
-  --table-header-background-hover: #E6E8EA;
-  --table-header-border-color: var(--background-modifier-border);
+  --table-header-background: #F5F6F7;          /* 飞书表头底色 */
+  --table-header-background-hover: #EFF0F1;
+  --table-header-border-color: #DEE0E3;
   --table-header-border-width: 1px;
   --table-header-color: var(--text-normal);
   --table-header-font: inherit;
@@ -1394,7 +1419,7 @@ body.link-underline .markdown-source-view.mod-cm6 .cm-hmd-internal-link {
   --table-header-weight: 600;
   --table-background: var(--background-primary);
   --table-background-secondary: var(--background-primary);
-  --table-border-color: var(--background-modifier-border);
+  --table-border-color: #DEE0E3;                /* 飞书表格线 */
   --table-border-width: 1px;
   --table-text-color: var(--text-normal);
   --table-text-size: 1em;
@@ -1413,7 +1438,8 @@ body.link-underline .markdown-source-view.mod-cm6 .cm-hmd-internal-link {
 .theme-dark {
   --table-header-background: #2A2B31;
   --table-header-background-hover: #35363C;
-  --table-header-border-color: var(--background-modifier-border);
+  --table-header-border-color: #3F4047;
+  --table-border-color: #3F4047;
   --table-background: var(--background-primary);
   --table-background-secondary: var(--background-primary);
   --table-row-alt-background: transparent;
@@ -1427,14 +1453,10 @@ body.link-underline .markdown-source-view.mod-cm6 .cm-hmd-internal-link {
   margin: 16px 0;
   border-collapse: separate;
   border-spacing: 0;
-  border: 1px solid var(--background-modifier-border);
+  border: 1px solid var(--table-border-color);
   border-radius: var(--radius-m);
   overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
-}
-.markdown-preview-view th,
-.markdown-rendered th {
-  border-bottom: 2px solid color-mix(in srgb, var(--accent-color) 35%, var(--background-modifier-border));
+  box-shadow: none;
 }
 .markdown-preview-view td,
 .markdown-rendered td {
@@ -1478,112 +1500,125 @@ body.link-underline .markdown-source-view.mod-cm6 .cm-hmd-internal-link {
   text-decoration: none;
 }
 
-/* —— Callout：飞书 Banner 风（浅彩底 + 1px 同色描边 + 3px 圆角，无左色条） —— */
-.markdown-preview-view .callout,
-.markdown-source-view.mod-cm6 .callout {
+/* —— Callout：飞书「高亮块」风（浅色实底 + 更浅一档同色描边 + 8px 圆角 + 正文保持黑色）——
+   实测飞书橙色高亮块：bg #FFF5EB / border #FED4A4 / radius 8px / padding 16px
+   其余颜色取飞书 UD 色板同档（50 底 / 200 描边） —— */
+.callout {
+  --callout-bg: #F0F4FF;        /* 默认蓝 */
+  --callout-border: #BACEFD;
+  --callout-color: 20, 86, 240;  /* 图标色（Obsidian 用 RGB 三元组） */
+}
+.callout[data-callout="note"],
+.callout[data-callout="info"],
+.callout[data-callout="todo"] {
+  --callout-bg: #F0F4FF; --callout-border: #BACEFD; --callout-color: 20, 86, 240;
+}
+.callout[data-callout="abstract"],
+.callout[data-callout="summary"],
+.callout[data-callout="tldr"],
+.callout[data-callout="example"] {
+  --callout-bg: #F6F1FE; --callout-border: #DCC9FD; --callout-color: 127, 59, 245;
+}
+.callout[data-callout="tip"],
+.callout[data-callout="hint"],
+.callout[data-callout="important"] {
+  --callout-bg: #F6F1FE; --callout-border: #DCC9FD; --callout-color: 127, 59, 245;
+}
+.callout[data-callout="success"],
+.callout[data-callout="check"],
+.callout[data-callout="done"] {
+  --callout-bg: #F0FBEF; --callout-border: #B7EDB1; --callout-color: 46, 161, 33;
+}
+.callout[data-callout="question"],
+.callout[data-callout="help"],
+.callout[data-callout="faq"] {
+  --callout-bg: #FFFCE3; --callout-border: #F8E6A0; --callout-color: 220, 155, 4;
+}
+.callout[data-callout="warning"],
+.callout[data-callout="caution"],
+.callout[data-callout="attention"] {
+  --callout-bg: #FFF5EB; --callout-border: #FED4A4; --callout-color: 255, 136, 0;
+}
+.callout[data-callout="failure"],
+.callout[data-callout="fail"],
+.callout[data-callout="missing"],
+.callout[data-callout="danger"],
+.callout[data-callout="error"],
+.callout[data-callout="bug"] {
+  --callout-bg: #FEF1F1; --callout-border: #FBBFBC; --callout-color: 245, 74, 69;
+}
+.callout[data-callout="quote"],
+.callout[data-callout="cite"] {
+  --callout-bg: #F5F6F7; --callout-border: #DEE0E3; --callout-color: 100, 106, 115;
+}
+
+/* 暗色：底色 = 语义色 14% 叠加，描边 = 35%（飞书暗色高亮块观感），图标色提亮 */
+.theme-dark .callout {
+  --callout-bg: rgba(var(--callout-color), 0.14);
+  --callout-border: rgba(var(--callout-color), 0.35);
+}
+.theme-dark .callout[data-callout="note"],
+.theme-dark .callout[data-callout="info"],
+.theme-dark .callout[data-callout="todo"] { --callout-color: 84, 169, 255; }
+.theme-dark .callout[data-callout="abstract"],
+.theme-dark .callout[data-callout="summary"],
+.theme-dark .callout[data-callout="tldr"],
+.theme-dark .callout[data-callout="example"],
+.theme-dark .callout[data-callout="tip"],
+.theme-dark .callout[data-callout="hint"],
+.theme-dark .callout[data-callout="important"] { --callout-color: 167, 115, 247; }
+.theme-dark .callout[data-callout="success"],
+.theme-dark .callout[data-callout="check"],
+.theme-dark .callout[data-callout="done"] { --callout-color: 79, 207, 108; }
+.theme-dark .callout[data-callout="question"],
+.theme-dark .callout[data-callout="help"],
+.theme-dark .callout[data-callout="faq"] { --callout-color: 255, 211, 58; }
+.theme-dark .callout[data-callout="warning"],
+.theme-dark .callout[data-callout="caution"],
+.theme-dark .callout[data-callout="attention"] { --callout-color: 255, 177, 78; }
+.theme-dark .callout[data-callout="failure"],
+.theme-dark .callout[data-callout="fail"],
+.theme-dark .callout[data-callout="missing"],
+.theme-dark .callout[data-callout="danger"],
+.theme-dark .callout[data-callout="error"],
+.theme-dark .callout[data-callout="bug"] { --callout-color: 255, 106, 77; }
+.theme-dark .callout[data-callout="quote"],
+.theme-dark .callout[data-callout="cite"] { --callout-color: 160, 163, 171; }
+
+/* 选择器不区分阅读 / 编辑模式，保证两种模式下所有 callout 类型颜色一致 */
+.callout {
   border-radius: var(--callout-radius);
-  border: var(--callout-border-width) solid var(--callout-color, var(--accent-color));
-  border-left: var(--callout-border-width) solid var(--callout-color, var(--accent-color));
-  background: color-mix(in srgb, var(--callout-color, var(--accent-color)) 8%, transparent);
+  border: var(--callout-border-width) solid var(--callout-border);
+  background: var(--callout-bg);
   box-shadow: none;
   padding: var(--callout-padding);
+  margin: 16px 0;
   mix-blend-mode: normal;
   color: var(--text-normal);
+  line-height: 1.8;   /* 飞书高亮块内行高略松（实测 28.8px / 16px） */
 }
-.markdown-preview-view .callout .callout-title,
-.markdown-source-view.mod-cm6 .callout .callout-title {
+.callout .callout-title {
   font-weight: var(--callout-title-weight);
   font-size: var(--callout-title-size);
-  color: var(--callout-color, var(--accent-color));
+  color: var(--text-normal);            /* 飞书：标题保持正文色，只有图标带语义色 */
   padding: var(--callout-title-padding);
+  gap: 8px;
 }
-.markdown-preview-view .callout .callout-content,
-.markdown-source-view.mod-cm6 .callout .callout-content {
+.callout .callout-icon {
+  color: rgb(var(--callout-color));
+}
+.callout .callout-content {
   padding: var(--callout-content-padding);
   color: var(--text-normal);
 }
-/* 飞书语义色精确配置（覆盖 Obsidian 默认） */
-.markdown-preview-view .callout[data-callout="info"],
-.markdown-preview-view .callout[data-callout="note"],
-.markdown-source-view.mod-cm6 .callout[data-callout="info"],
-.markdown-source-view.mod-cm6 .callout[data-callout="note"] {
-  --callout-color: #0064FA;  /* semi blue-5 */
-}
-.markdown-preview-view .callout[data-callout="important"],
-.markdown-source-view.mod-cm6 .callout[data-callout="important"] {
-  --callout-color: #7B3DD9;  /* semi purple-5 */
-}
-.markdown-preview-view .callout[data-callout="success"],
-.markdown-preview-view .callout[data-callout="tip"],
-.markdown-preview-view .callout[data-callout="check"],
-.markdown-preview-view .callout[data-callout="done"],
-.markdown-source-view.mod-cm6 .callout[data-callout="success"],
-.markdown-source-view.mod-cm6 .callout[data-callout="tip"] {
-  --callout-color: #3BB346;  /* semi green-5 */
-}
-.markdown-preview-view .callout[data-callout="warning"],
-.markdown-source-view.mod-cm6 .callout[data-callout="warning"] {
-  --callout-color: #FC8800;  /* semi orange-5 */
-}
-.markdown-preview-view .callout[data-callout="caution"],
-.markdown-source-view.mod-cm6 .callout[data-callout="caution"] {
-  --callout-color: #E03131;  /* semi red-orange */
-}
-.markdown-preview-view .callout[data-callout="danger"],
-.markdown-preview-view .callout[data-callout="error"],
-.markdown-preview-view .callout[data-callout="bug"],
-.markdown-source-view.mod-cm6 .callout[data-callout="danger"],
-.markdown-source-view.mod-cm6 .callout[data-callout="error"] {
-  --callout-color: #F93920;  /* semi red-5 */
-}
-
-/* —— 暗色模式 callout：提亮语义色（复用已有暗色 --feishu-*）+ tint 加浓到 14% —— */
-.theme-dark .markdown-preview-view .callout,
-.theme-dark .markdown-source-view.mod-cm6 .callout {
-  background: color-mix(in srgb, var(--callout-color, var(--accent-color)) 14%, transparent);
-  mix-blend-mode: normal;
-  color: var(--text-normal);
-}
-.theme-dark .markdown-preview-view .callout[data-callout="info"],
-.theme-dark .markdown-preview-view .callout[data-callout="note"],
-.theme-dark .markdown-source-view.mod-cm6 .callout[data-callout="info"],
-.theme-dark .markdown-source-view.mod-cm6 .callout[data-callout="note"] {
-  --callout-color: #54A9FF;
-}
-.theme-dark .markdown-preview-view .callout[data-callout="important"],
-.theme-dark .markdown-source-view.mod-cm6 .callout[data-callout="important"] {
-  --callout-color: #A773F7;
-}
-.theme-dark .markdown-preview-view .callout[data-callout="success"],
-.theme-dark .markdown-preview-view .callout[data-callout="tip"],
-.theme-dark .markdown-preview-view .callout[data-callout="check"],
-.theme-dark .markdown-preview-view .callout[data-callout="done"],
-.theme-dark .markdown-source-view.mod-cm6 .callout[data-callout="success"],
-.theme-dark .markdown-source-view.mod-cm6 .callout[data-callout="tip"] {
-  --callout-color: #4FCF6C;
-}
-.theme-dark .markdown-preview-view .callout[data-callout="warning"],
-.theme-dark .markdown-source-view.mod-cm6 .callout[data-callout="warning"] {
-  --callout-color: #FFB14E;
-}
-.theme-dark .markdown-preview-view .callout[data-callout="caution"],
-.theme-dark .markdown-source-view.mod-cm6 .callout[data-callout="caution"] {
-  --callout-color: #FF7875;
-}
-.theme-dark .markdown-preview-view .callout[data-callout="danger"],
-.theme-dark .markdown-preview-view .callout[data-callout="error"],
-.theme-dark .markdown-preview-view .callout[data-callout="bug"],
-.theme-dark .markdown-source-view.mod-cm6 .callout[data-callout="danger"],
-.theme-dark .markdown-source-view.mod-cm6 .callout[data-callout="error"] {
-  --callout-color: #FF6A4D;
-}
+.callout .callout-content > :first-child { margin-top: 0; }
+.callout .callout-content > :last-child { margin-bottom: 0; }
 
 /* Style Settings 开关：Notion 左色条风（用户开启 .callout-notion 时生效） */
-body.callout-notion .markdown-preview-view .callout,
-body.callout-notion .markdown-source-view.mod-cm6 .callout {
+body.callout-notion .callout {
   border: none;
-  border-left: 4px solid var(--callout-color, var(--accent-color));
-  background: color-mix(in srgb, var(--callout-color, var(--accent-color)) 4%, transparent);
+  border-left: 4px solid rgb(var(--callout-color));
+  background: rgba(var(--callout-color), 0.05);
   border-radius: var(--radius-s);
 }
 
@@ -1616,7 +1651,7 @@ summary {
   color: var(--text-normal);
 }
 summary:hover {
-  color: var(--interactive-accent, #3370FF);
+  color: var(--accent-color);
 }
 details[open] summary {
   margin-bottom: 10px;
@@ -1668,7 +1703,7 @@ details[open] summary {
   text-decoration-color: var(--text-faint);
 }
 
-/* —— 列表项 marker：飞书三级递进 disc→circle→square + 紧凑间距 —— */
+/* —— 列表项 marker：飞书三级递进（无序 disc→circle→square，有序 1.→a.→i.）+ 紧凑间距 —— */
 .markdown-preview-view ul li::marker,
 .markdown-preview-view ol li::marker {
   color: var(--text-muted);
@@ -1677,6 +1712,10 @@ details[open] summary {
 .markdown-preview-view ul { list-style: disc; }
 .markdown-preview-view ul ul { list-style: circle; }
 .markdown-preview-view ul ul ul { list-style: square; }
+.markdown-preview-view ol { list-style: decimal; }
+.markdown-preview-view ol ol { list-style: lower-alpha; }
+.markdown-preview-view ol ol ol { list-style: lower-roman; }
+.markdown-preview-view ol ol ol ol { list-style: decimal; }
 .markdown-preview-view li {
   margin-top: 4px;  /* 飞书紧凑列表项间距 */
 }
@@ -1877,16 +1916,18 @@ body {
   --metadata-sidebar-label-font-size: 13px;
 }
 
-/* —— 8. Inline title：飞书文档标题感（30px / 600 / 顶部留白） —— */
+/* —— 8. Inline title：飞书文档标题（实测 34px / 500 / 行高 1.625 / 顶部留白 20px） —— */
 body {
-  --inline-title-size: 1.875rem;       /* 30px */
-  --inline-title-weight: 600;
+  --inline-title-size: 34px;
+  --inline-title-weight: 500;
+  --inline-title-line-height: 1.625;
   --inline-title-margin-bottom: 1.25rem;
   --inline-title-text-color: var(--text-normal);
 }
 .inline-title {
   padding-top: 20px;
-  line-height: 1.3;
+  line-height: var(--inline-title-line-height);
+  letter-spacing: -0.02em;
 }
 
 /* —— 按钮：飞书风格（主按钮填色，次按钮描边） —— */
@@ -2409,7 +2450,8 @@ body.image-rounded-off .markdown-preview-view .image-embed img {
     --text-faint: #8F959E;
     --accent-color: #1456F0;
     --link-color: #1456F0;
-    --code-background: #F9F9F9;
+    --code-background: #F5F6F7;
+    --code-block-background: #F5F6F7;
     --background-modifier-border: rgba(28, 31, 35, 0.08);
     --background-modifier-hover: rgba(46, 50, 56, 0.05);
   }
@@ -2458,32 +2500,101 @@ body.image-rounded-off .markdown-preview-view .image-embed img {
   padding: 10px 12px;
 }
 
-/* 窄屏断点：正文字号微调 */
+/* 窄屏断点：飞书移动端正文 16px / 文档标题缩小到 26px */
 @media (max-width: 768px) {
-  .markdown-preview-view,
-  .markdown-source-view.mod-cm6 {
-    --base-font-size: 15px;
+  body {
+    --inline-title-size: 26px;
   }
 }
 
 /* ============================================================
-   G. 飞书特色多色高亮扩展 (Multi-color Highlights)
+   G. 飞书文字颜色 / 背景颜色（对齐飞书云文档「文字颜色 7 + 背景色 14」）
+   用法（HTML 内联）：
+     文字色：<span class="fc-red">文字</span>
+       fc-red / fc-orange / fc-yellow / fc-green / fc-blue / fc-purple / fc-grey
+     背景色（浅）：<mark class="hl-red">文字</mark>
+     背景色（深）：<mark class="hl-red-strong">文字</mark>
+       red / orange / yellow / green / blue / purple / grey
    ============================================================ */
-mark.hl-red, .theme-light mark.hl-red { background: rgba(249, 57, 32, 0.20); color: inherit; }
-mark.hl-orange, .theme-light mark.hl-orange { background: rgba(252, 136, 0, 0.22); color: inherit; }
-mark.hl-green, .theme-light mark.hl-green { background: rgba(59, 179, 70, 0.20); color: inherit; }
-mark.hl-blue, .theme-light mark.hl-blue { background: rgba(0, 100, 250, 0.18); color: inherit; }
-mark.hl-purple, .theme-light mark.hl-purple { background: rgba(123, 61, 217, 0.20); color: inherit; }
+body {
+  /* 文字颜色 */
+  --fc-red: #D83931;
+  --fc-orange: #DE7802;
+  --fc-yellow: #DC9B04;
+  --fc-green: #2EA121;
+  --fc-blue: #245BDB;
+  --fc-purple: #6425D0;
+  --fc-grey: #646A73;
+  /* 背景颜色（浅） */
+  --hl-red: #FDE2E2;
+  --hl-orange: #FEEAD2;
+  --hl-yellow: #FFFBC2;
+  --hl-green: #D9F5D6;
+  --hl-blue: #E1EAFF;
+  --hl-purple: #ECE2FE;
+  --hl-grey: #F2F3F5;
+  /* 背景颜色（深） */
+  --hl-red-strong: #FBBFBC;
+  --hl-orange-strong: #FED4A4;
+  --hl-yellow-strong: #F8E6A0;
+  --hl-green-strong: #B7EDB1;
+  --hl-blue-strong: #BACEFD;
+  --hl-purple-strong: #CDB2FA;
+  --hl-grey-strong: #DEE0E3;
+}
+.theme-dark {
+  --fc-red: #F76964;
+  --fc-orange: #FFA53D;
+  --fc-yellow: #FFC60A;
+  --fc-green: #51BA43;
+  --fc-blue: #4C88FF;
+  --fc-purple: #A275FF;
+  --fc-grey: #A6A6A6;
+  --hl-red: rgba(247, 105, 100, 0.20);
+  --hl-orange: rgba(255, 165, 61, 0.20);
+  --hl-yellow: rgba(255, 198, 10, 0.20);
+  --hl-green: rgba(81, 186, 67, 0.20);
+  --hl-blue: rgba(76, 136, 255, 0.20);
+  --hl-purple: rgba(162, 117, 255, 0.20);
+  --hl-grey: rgba(255, 255, 255, 0.10);
+  --hl-red-strong: rgba(247, 105, 100, 0.40);
+  --hl-orange-strong: rgba(255, 165, 61, 0.40);
+  --hl-yellow-strong: rgba(255, 198, 10, 0.40);
+  --hl-green-strong: rgba(81, 186, 67, 0.40);
+  --hl-blue-strong: rgba(76, 136, 255, 0.40);
+  --hl-purple-strong: rgba(162, 117, 255, 0.40);
+  --hl-grey-strong: rgba(255, 255, 255, 0.20);
+}
 
-.theme-dark mark.hl-red { background: rgba(255, 106, 77, 0.32); color: inherit; }
-.theme-dark mark.hl-orange { background: rgba(255, 177, 78, 0.32); color: inherit; }
-.theme-dark mark.hl-green { background: rgba(79, 207, 108, 0.30); color: inherit; }
-.theme-dark mark.hl-blue { background: rgba(84, 169, 255, 0.30); color: inherit; }
-.theme-dark mark.hl-purple { background: rgba(167, 115, 247, 0.32); color: inherit; }
+.fc-red    { color: var(--fc-red); }
+.fc-orange { color: var(--fc-orange); }
+.fc-yellow { color: var(--fc-yellow); }
+.fc-green  { color: var(--fc-green); }
+.fc-blue   { color: var(--fc-blue); }
+.fc-purple { color: var(--fc-purple); }
+.fc-grey   { color: var(--fc-grey); }
+
+mark.hl-red    { background: var(--hl-red); }
+mark.hl-orange { background: var(--hl-orange); }
+mark.hl-yellow { background: var(--hl-yellow); }
+mark.hl-green  { background: var(--hl-green); }
+mark.hl-blue   { background: var(--hl-blue); }
+mark.hl-purple { background: var(--hl-purple); }
+mark.hl-grey   { background: var(--hl-grey); }
+mark.hl-red-strong    { background: var(--hl-red-strong); }
+mark.hl-orange-strong { background: var(--hl-orange-strong); }
+mark.hl-yellow-strong { background: var(--hl-yellow-strong); }
+mark.hl-green-strong  { background: var(--hl-green-strong); }
+mark.hl-blue-strong   { background: var(--hl-blue-strong); }
+mark.hl-purple-strong { background: var(--hl-purple-strong); }
+mark.hl-grey-strong   { background: var(--hl-grey-strong); }
 
 mark[class*="hl-"] {
-  padding: 1px 5px;
-  border-radius: var(--radius-s);
+  color: inherit;
+  padding: 0 2px;
+  border-radius: 2px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
 }
 
 /* ============================================================
@@ -2506,7 +2617,7 @@ mark[class*="hl-"] {
   --mermaid-cluster-bg: #F8F9FA;
   --mermaid-cluster-stroke: #DEE0E3;
   --mermaid-gate-bg: #EEF4FF;
-  --mermaid-gate-stroke: #3370FF;
+  --mermaid-gate-stroke: var(--accent-color);
 }
 
 .theme-dark .block-language-mermaid,
@@ -2520,7 +2631,7 @@ mark[class*="hl-"] {
   --mermaid-cluster-bg: #1E2024;
   --mermaid-cluster-stroke: #383B42;
   --mermaid-gate-bg: #1F2838;
-  --mermaid-gate-stroke: #3370FF;
+  --mermaid-gate-stroke: var(--accent-color);
 }
 
 /* 彻底禁用 Obsidian 内置反转滤镜（其 invert(100%) 会将纯白文字反转成纯黑） */
@@ -2569,7 +2680,7 @@ mark[class*="hl-"] {
 .theme-dark .block-language-mermaid .node polygon,
 .theme-dark .mermaid .node polygon {
   fill: #FFFFFF !important;
-  stroke: #3370FF !important;
+  stroke: var(--accent-color) !important;
   stroke-width: 2px !important;
 }
 
