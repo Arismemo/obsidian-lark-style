@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<!-- 模拟 Obsidian 阅读模式 DOM，供截图回归使用 -->
+<style>
+  body { margin: 0; background: var(--background-primary); }
+  .markdown-preview-view { max-width: var(--file-line-width); margin: 0 auto; padding: 24px 40px; }
+  /* Obsidian 核心对完成任务的规则（主题通过变量控制） */
+  ul > li.task-list-item[data-task="x"] { text-decoration: var(--checklist-done-decoration); color: var(--checklist-done-color); }
+  ul.contains-task-list { list-style: none; padding-left: 4px; }
+</style>
+<link rel="stylesheet" href="../theme.css">
+</head>
+<body class="theme-light">
+<div class="markdown-preview-view markdown-rendered">
+  <div class="inline-title">主题回归测试</div>
+  <h1>一级标题</h1>
+  <p>正文段落，中文English混排123。<strong>加粗</strong>、<a href="#">链接</a>、<a class="internal-link is-unresolved">未解析链接</a>、<code>inline code</code>、<mark>高亮</mark>、<del>删除线</del>。</p>
+  <p><span class="fc-red">红</span> <span class="fc-orange">橙</span> <span class="fc-yellow">黄</span> <span class="fc-green">绿</span> <span class="fc-blue">蓝</span> <span class="fc-purple">紫</span>
+     <mark class="hl-blue">浅蓝底</mark> <mark class="hl-orange-strong">深橙底</mark></p>
+  <h2>任务状态</h2>
+  <ul class="contains-task-list">
+    <li class="task-list-item" data-task=" "><input type="checkbox" class="task-list-item-checkbox">待办</li>
+    <li class="task-list-item is-checked" data-task="x"><input type="checkbox" class="task-list-item-checkbox" checked>已完成
+      <ul class="contains-task-list"><li class="task-list-item" data-task=" "><input type="checkbox" class="task-list-item-checkbox">未完成的子任务（不应被划掉）</li></ul></li>
+    <li class="task-list-item is-checked" data-task="/"><input type="checkbox" class="task-list-item-checkbox" checked>进行中</li>
+    <li class="task-list-item is-checked" data-task="-"><input type="checkbox" class="task-list-item-checkbox" checked>已取消</li>
+    <li class="task-list-item is-checked" data-task=">"><input type="checkbox" class="task-list-item-checkbox" checked>已推迟</li>
+    <li class="task-list-item is-checked" data-task="<"><input type="checkbox" class="task-list-item-checkbox" checked>已排期</li>
+    <li class="task-list-item is-checked" data-task="!"><input type="checkbox" class="task-list-item-checkbox" checked>重要</li>
+    <li class="task-list-item is-checked" data-task="?"><input type="checkbox" class="task-list-item-checkbox" checked>存疑</li>
+    <li class="task-list-item is-checked" data-task="*"><input type="checkbox" class="task-list-item-checkbox" checked>星标</li>
+  </ul>
+  <blockquote><p>引用文字</p></blockquote>
+  <div class="callout" data-callout="warning"><div class="callout-title"><div class="callout-icon">⚠</div><div class="callout-title-inner">Warning</div></div><div class="callout-content"><p>高亮块内容。</p></div></div>
+  <ol><li>有序<ol><li>二级<ol><li>三级</li></ol></li></ol></li></ol>
+  <table><thead><tr><th>列一</th><th>列二</th></tr></thead><tbody><tr><td>A</td><td>1</td></tr></tbody></table>
+  <pre><code>const theme = "lark";</code></pre>
+</div>
+</body>
+</html>

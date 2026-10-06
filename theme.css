@@ -2,7 +2,7 @@
    Feishu Theme for Obsidian
    基于飞书（Feishu / Lark）设计语言 + Semi Design 设计令牌
    色板取自 @douyinfe/semi-theme-default v2.101.0 官方源
-   排版数值实测自飞书云文档（正文 16/26、标题 26/22/20/18、版心 820px）
+   v1.2.0 · 排版数值实测自飞书云文档（正文 16/26、标题 26/22/20/18、版心 820px）
    支持：浅色 + 暗色双模式 / Style Settings 可视化配置
    ============================================================ */
 
@@ -233,6 +233,18 @@ settings:
     description: 默认飞书 Banner（浅彩底+描边），开启此项改为 Notion 左色条
     type: class-toggle
   -
+    id: focus-mode
+    title: Focus Mode (Live Preview)
+    title.zh: 专注模式
+    description: 编辑时淡化当前行以外的内容（iA Writer / Typora 式）
+    type: class-toggle
+  -
+    id: text-autospace-off
+    title: Disable CJK–Latin Auto Spacing
+    title.zh: 关闭中英文自动间距
+    description: 默认在中文与英文 / 数字之间自动留出间隙（无需手打空格）
+    type: class-toggle
+  -
     id: image-rounded-off
     title: Disable Rounded Image Corners
     title.zh: 关闭图片圆角
@@ -398,7 +410,8 @@ body.theme-light.is-mobile {
   /* —— 文本 —— */
   --text-normal: #1F2329;                        /* 飞书一级正文 */
   --text-muted: #646A73;                         /* 飞书二级正文 */
-  --text-faint: #8F959E;                         /* 飞书 placeholder 色 */
+  --text-faint: #8F959E;                         /* 飞书 placeholder 色（仅用于装饰性元素：md 符号、折叠箭头） */
+  --text-subtle: #70757D;                        /* 可读三级灰：完成任务 / 删除线等正文内容，对白底 4.6:1 满足 WCAG AA */
   --text-formatted: #8F959E;
   --text-on-accent: #FFFFFF;
   --text-on-accent-inverted: var(--accent-color);
@@ -462,7 +475,7 @@ body.theme-light.is-mobile {
   /* —— 链接 / tag —— */
   --link-color: var(--accent-color);
   --link-color-hover: var(--accent-color-hover);
-  --link-unresolved-color: rgba(28, 31, 35, 0.4);
+  --link-unresolved-color: rgba(28, 31, 35, 0.62);   /* 4.7:1，满足 AA */
   --tag-background: rgba(46, 50, 56, 0.05);   /* fill-0 */
   --tag-background-hover: rgba(46, 50, 56, 0.09);
   --tag-color: #41464C;
@@ -667,6 +680,7 @@ body.theme-dark.is-mobile {
   --text-normal: #F9F9F9;
   --text-muted: rgba(249, 249, 249, 0.80);
   --text-faint: rgba(249, 249, 249, 0.60);
+  --text-subtle: rgba(249, 249, 249, 0.60);      /* 暗色下 faint 已达 7:1，直接复用 */
   --text-formatted: rgba(249, 249, 249, 0.60);
   --text-on-accent: #16161A;
   --text-on-accent-inverted: #FFFFFF;
@@ -730,7 +744,7 @@ body.theme-dark.is-mobile {
   /* —— 链接 / tag —— */
   --link-color: var(--accent-color);
   --link-color-hover: var(--accent-color-hover);
-  --link-unresolved-color: rgba(249, 249, 249, 0.4);
+  --link-unresolved-color: rgba(249, 249, 249, 0.55);  /* 5.9:1 */
   --tag-background: rgba(255, 255, 255, 0.08);
   --tag-background-hover: rgba(255, 255, 255, 0.14);
   --tag-color: #C8CAD0;
@@ -1194,8 +1208,8 @@ body.link-underline .markdown-source-view.mod-cm6 .cm-hmd-internal-link {
 
 /* —— Live Preview 编辑器：光标 + markdown 符号淡化 + 边角元素 —— */
 /* 光标：飞书品牌蓝 */
-.cm-cursor, .cm-dropCursor {
-  border-left: 1.2px solid var(--accent-color) !important;
+body {
+  --caret-color: var(--accent-color);   /* Obsidian 原生光标色变量 */
 }
 .cm-fatcursor {
   background: var(--accent-color);
@@ -1352,7 +1366,7 @@ body.link-underline .markdown-source-view.mod-cm6 .cm-hmd-internal-link {
   padding: 4px 12px;
 }
 
-/* —— 复选框：未选灰描边圆角 3px，选中飞书蓝 + 白勾 —— */
+/* —— 复选框：未选灰描边圆角 3px，选中飞书蓝 + 勾 —— */
 .markdown-preview-view input[type="checkbox"],
 .markdown-source-view.mod-cm6 .task-list-item-checkbox {
   appearance: none;
@@ -1366,7 +1380,7 @@ body.link-underline .markdown-source-view.mod-cm6 .cm-hmd-internal-link {
   vertical-align: middle;
   position: relative;
   margin-right: 6px;
-  transition: all 0.15s ease;
+  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
 }
 .markdown-preview-view input[type="checkbox"]:active,
 .markdown-source-view.mod-cm6 .task-list-item-checkbox:active {
@@ -1385,22 +1399,110 @@ body.link-underline .markdown-source-view.mod-cm6 .cm-hmd-internal-link {
   top: 1px;
   width: 5px;
   height: 9px;
-  border: solid #FFFFFF;
+  border: solid var(--text-on-accent);   /* 浅色白勾 / 暗色深勾 */
   border-width: 0 2px 2px 0;
   transform: rotate(45deg);
 }
-.theme-dark .markdown-preview-view input[type="checkbox"]:checked::after,
-.theme-dark .markdown-source-view.mod-cm6 .task-list-item-checkbox:checked::after {
-  border-color: #16161A;
+
+/* ============================================================
+   任务状态（Tasks / Minimal / Things 通行写法）
+   [ ] 待办  [x] 完成  [/] 进行中  [-] 已取消  [>] 已推迟
+   [<] 已排期  [!] 重要  [?] 存疑  [*] 星标
+   Obsidian 对任何非空格字符都会勾选复选框并写入 data-task 属性：
+   阅读模式 li.task-list-item[data-task] / 编辑模式 .HyperMD-task-line[data-task]
+   ============================================================ */
+body {
+  /* 完成态：文字降到三级灰 + 删除线（不再整行半透明，避免链接 / 标签发脏） */
+  --checklist-done-decoration: line-through;
+  --checklist-done-color: var(--text-subtle);
+
+  --task-icon-forward: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 8h9M8.5 4.5 12 8l-3.5 3.5' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --task-icon-schedule: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect x='2.5' y='3.5' width='11' height='10' rx='1.5' fill='none' stroke='%23000' stroke-width='1.6'/%3E%3Cpath d='M2.5 6.5h11M5.5 2v3M10.5 2v3' stroke='%23000' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
+  --task-icon-important: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 3v6' stroke='%23000' stroke-width='2.2' stroke-linecap='round'/%3E%3Ccircle cx='8' cy='12.5' r='1.3'/%3E%3C/svg%3E");
+  --task-icon-question: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M5.8 5.8a2.3 2.3 0 1 1 3.2 2.1c-.6.3-1 .8-1 1.5v.4' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round'/%3E%3Ccircle cx='8' cy='12.6' r='1.1'/%3E%3C/svg%3E");
+  --task-icon-star: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='m8 2.2 1.8 3.7 4 .6-2.9 2.8.7 4L8 11.4l-3.6 1.9.7-4-2.9-2.8 4-.6z'/%3E%3C/svg%3E");
 }
 
-/* —— 任务项勾选态：飞书式柔和中划线与轻度淡化 —— */
-.markdown-preview-view .task-list-item:has(input:checked),
-.markdown-source-view.mod-cm6 .HyperMD-task-list:has(input:checked) {
-  opacity: 0.62;
+/* 修复：完成态只作用于本行文字。阅读模式下 text-decoration 会传递给嵌套子列表，
+   把未完成的子任务也划掉——让嵌套列表成为原子行内块即可截断传递 */
+.markdown-rendered li.task-list-item[data-task="x"] > :is(ul, ol),
+.markdown-rendered li.task-list-item[data-task="X"] > :is(ul, ol),
+.markdown-rendered li.task-list-item[data-task="-"] > :is(ul, ol) {
+  display: inline-block;
+  width: 100%;
+  vertical-align: top;
+  color: var(--text-normal);
+  text-decoration: none;
+}
+
+/* 非「完成」的特殊状态：去掉默认的勾，改为图标 */
+.markdown-rendered li.task-list-item:not([data-task="x"], [data-task="X"], [data-task=" "]) .task-list-item-checkbox:checked,
+.markdown-source-view.mod-cm6 .HyperMD-task-line:not([data-task="x"], [data-task="X"], [data-task=" "]) .task-list-item-checkbox:checked {
+  background: transparent;
+  border-color: var(--task-status-color, var(--color-base-40));
+}
+.markdown-rendered li.task-list-item:not([data-task="x"], [data-task="X"], [data-task=" "]) .task-list-item-checkbox:checked::after,
+.markdown-source-view.mod-cm6 .HyperMD-task-line:not([data-task="x"], [data-task="X"], [data-task=" "]) .task-list-item-checkbox:checked::after {
+  inset: 1px;
+  left: 1px;
+  top: 1px;
+  width: auto;
+  height: auto;
+  border: none;
+  transform: none;
+  background-color: var(--task-status-color, var(--text-muted));
+  -webkit-mask: var(--task-icon) center / contain no-repeat;
+  mask: var(--task-icon) center / contain no-repeat;
+}
+
+/* [/] 进行中：左半填充 */
+:is(.markdown-rendered li.task-list-item, .markdown-source-view.mod-cm6 .HyperMD-task-line)[data-task="/"] {
+  --task-status-color: var(--accent-color);
+}
+:is(.markdown-rendered li.task-list-item, .markdown-source-view.mod-cm6 .HyperMD-task-line)[data-task="/"] .task-list-item-checkbox:checked {
+  background: linear-gradient(90deg, var(--accent-color) 50%, transparent 50%);
+}
+:is(.markdown-rendered li.task-list-item, .markdown-source-view.mod-cm6 .HyperMD-task-line)[data-task="/"] .task-list-item-checkbox:checked::after {
+  display: none;
+}
+
+/* [-] 已取消：灰色短横 + 删除线 */
+:is(.markdown-rendered li.task-list-item, .markdown-source-view.mod-cm6 .HyperMD-task-line)[data-task="-"] {
+  --task-status-color: var(--text-subtle);
+  color: var(--text-subtle);
   text-decoration: line-through;
-  text-decoration-color: var(--text-muted);
-  transition: opacity 0.2s ease;
+}
+:is(.markdown-rendered li.task-list-item, .markdown-source-view.mod-cm6 .HyperMD-task-line)[data-task="-"] .task-list-item-checkbox:checked::after {
+  -webkit-mask: none;
+  mask: none;
+  inset: auto 3px;
+  top: 6px;
+  height: 1.5px;
+  border-radius: 1px;
+}
+
+/* [>] 已推迟 / [<] 已排期 */
+:is(.markdown-rendered li.task-list-item, .markdown-source-view.mod-cm6 .HyperMD-task-line)[data-task=">"] {
+  --task-status-color: var(--text-muted);
+  --task-icon: var(--task-icon-forward);
+}
+:is(.markdown-rendered li.task-list-item, .markdown-source-view.mod-cm6 .HyperMD-task-line)[data-task="<"] {
+  --task-status-color: var(--text-muted);
+  --task-icon: var(--task-icon-schedule);
+}
+
+/* [!] 重要 / [?] 存疑 / [*] 星标 */
+:is(.markdown-rendered li.task-list-item, .markdown-source-view.mod-cm6 .HyperMD-task-line)[data-task="!"] {
+  --task-status-color: var(--text-error);
+  --task-icon: var(--task-icon-important);
+}
+:is(.markdown-rendered li.task-list-item, .markdown-source-view.mod-cm6 .HyperMD-task-line)[data-task="?"] {
+  --task-status-color: var(--text-warning);
+  --task-icon: var(--task-icon-question);
+}
+:is(.markdown-rendered li.task-list-item, .markdown-source-view.mod-cm6 .HyperMD-task-line)[data-task="*"] {
+  --task-status-color: var(--color-yellow);
+  --task-icon: var(--task-icon-star);
 }
 
 /* ============================================================
@@ -1699,8 +1801,8 @@ details[open] summary {
 .markdown-preview-view s,
 .markdown-preview-view .cm-strikethrough,
 .markdown-source-view.mod-cm6 .cm-strikethrough {
-  color: var(--text-faint);
-  text-decoration-color: var(--text-faint);
+  color: var(--text-subtle);
+  text-decoration-color: var(--text-subtle);
 }
 
 /* —— 列表项 marker：飞书三级递进（无序 disc→circle→square，有序 1.→a.→i.）+ 紧凑间距 —— */
@@ -2170,8 +2272,7 @@ body.image-rounded-off .markdown-preview-view .image-embed img {
   text-align: center;
 }
 /* Live Preview 的 Mermaid 也去掉代码块样式 */
-.markdown-source-view.mod-cm6 .cm-embed-block:has(.mermaid),
-.markdown-source-view.mod-cm6 .cm-embed-block:has(.block-language-mermaid) {
+.markdown-source-view.mod-cm6 .cm-embed-block.cm-lang-mermaid {   /* Obsidian 原生类，免用 :has() */
   background: transparent;
   border: none;
 }
@@ -2519,9 +2620,9 @@ body.image-rounded-off .markdown-preview-view .image-embed img {
 body {
   /* 文字颜色 */
   --fc-red: #D83931;
-  --fc-orange: #DE7802;
-  --fc-yellow: #DC9B04;
-  --fc-green: #2EA121;
+  --fc-orange: #B35A00;   /* 飞书原值 #DE7802 仅 3.1:1，加深到 4.8:1 */
+  --fc-yellow: #9E6A00;   /* 飞书原值 #DC9B04 仅 2.4:1，加深到 4.7:1 */
+  --fc-green: #1F8019;    /* 飞书原值 #2EA121 仅 3.4:1，加深到 5.1:1 */
   --fc-blue: #245BDB;
   --fc-purple: #6425D0;
   --fc-grey: #646A73;
@@ -2612,8 +2713,7 @@ mark[class*="hl-"] {
   --mermaid-node-stroke: #BBC0C7;
   --mermaid-node-text: #1F2329;
   --mermaid-line: #646A73;
-  --mermaid-edge-bg: #FFFFFF;
-  --mermaid-edge-text: #646A73;
+  --mermaid-edge-text: #1F2329;
   --mermaid-cluster-bg: #F8F9FA;
   --mermaid-cluster-stroke: #DEE0E3;
   --mermaid-gate-bg: #EEF4FF;
@@ -2623,11 +2723,10 @@ mark[class*="hl-"] {
 .theme-dark .block-language-mermaid,
 .theme-dark .mermaid {
   --mermaid-node-bg: #272930;
-  --mermaid-node-stroke: #454954;
+  --mermaid-node-stroke: #4F5159;
   --mermaid-node-text: #F2F3F5;
   --mermaid-line: #8F959E;
-  --mermaid-edge-bg: #1C1E22;
-  --mermaid-edge-text: #D0D3D8;
+  --mermaid-edge-text: #F2F3F5;
   --mermaid-cluster-bg: #1E2024;
   --mermaid-cluster-stroke: #383B42;
   --mermaid-gate-bg: #1F2838;
@@ -2635,9 +2734,7 @@ mark[class*="hl-"] {
 }
 
 /* 彻底禁用 Obsidian 内置反转滤镜（其 invert(100%) 会将纯白文字反转成纯黑） */
-.theme-dark .block-language-mermaid > svg,
 .theme-dark .block-language-mermaid svg,
-.theme-dark .mermaid > svg,
 .theme-dark .mermaid svg {
   filter: none !important;
 }
@@ -2649,195 +2746,66 @@ mark[class*="hl-"] {
   font-family: var(--font-interface-theme) !important;
 }
 
-/* 节点图形通用圆角与描边 */
-.block-language-mermaid .node rect,
-.block-language-mermaid .node circle,
-.block-language-mermaid .node polygon,
-.mermaid .node rect,
-.mermaid .node circle,
-.mermaid .node polygon {
+/* 说明：Mermaid 把样式写在 SVG 内 <style>#mermaid-xxx …</style>（ID 级优先级），
+   以下规则必须 !important 才能生效；颜色全部走上方 --mermaid-* 变量，明暗模式共用一套规则 */
+
+/* —— 节点：卡片底色 + 描边（暗色不再用纯白底，避免深色背景上刺眼） —— */
+:is(.block-language-mermaid, .mermaid) .node :is(rect, circle, ellipse, path, .label-container) {
+  fill: var(--mermaid-node-bg) !important;
+  stroke: var(--mermaid-node-stroke) !important;
+  stroke-width: 1.5px !important;
+}
+:is(.block-language-mermaid, .mermaid) .node :is(rect, polygon) {
   rx: 6px;
   ry: 6px;
+}
+/* 菱形决策节点：品牌色描边 + 浅蓝底 */
+:is(.block-language-mermaid, .mermaid) .node polygon {
+  fill: var(--mermaid-gate-bg) !important;
+  stroke: var(--mermaid-gate-stroke) !important;
   stroke-width: 1.5px !important;
 }
 
-/* —— 节点背景（纯白卡片底色，清晰易读） —— */
-.theme-dark .block-language-mermaid .node rect,
-.theme-dark .block-language-mermaid .node circle,
-.theme-dark .block-language-mermaid .node ellipse,
-.theme-dark .block-language-mermaid .node path,
-.theme-dark .block-language-mermaid .node .label-container,
-.theme-dark .mermaid .node rect,
-.theme-dark .mermaid .node circle,
-.theme-dark .mermaid .node ellipse,
-.theme-dark .mermaid .node path,
-.theme-dark .mermaid .node .label-container {
-  fill: #FFFFFF !important;
-  stroke: #D0D3D8 !important;
-}
-
-/* 菱形决策节点 (Gate / Decision) 飞书蓝描边白底卡片 */
-.theme-dark .block-language-mermaid .node polygon,
-.theme-dark .mermaid .node polygon {
-  fill: #FFFFFF !important;
-  stroke: var(--accent-color) !important;
-  stroke-width: 2px !important;
-}
-
-.theme-light .block-language-mermaid .node polygon,
-.theme-light .mermaid .node polygon {
-  fill: var(--mermaid-gate-bg) !important;
-  stroke: var(--mermaid-gate-stroke) !important;
-}
-
-/* —— 节点文字（飞书深黑字，高对比度绝对清晰） —— */
-.theme-dark .block-language-mermaid .node text,
-.theme-dark .block-language-mermaid .node .nodeLabel,
-.theme-dark .block-language-mermaid .node .label,
-.theme-dark .block-language-mermaid .node foreignObject div,
-.theme-dark .block-language-mermaid .node foreignObject span,
-.theme-dark .block-language-mermaid .label text,
-.theme-dark .mermaid .node text,
-.theme-dark .mermaid .node .nodeLabel,
-.theme-dark .mermaid .node .label,
-.theme-dark .mermaid .node foreignObject div,
-.theme-dark .mermaid .node foreignObject span,
-.theme-dark .mermaid .label text {
-  color: #1F2329 !important;
-  fill: #1F2329 !important;
-  font-weight: 500 !important;
-}
-
-/* —— 浅色模式节点文字 —— */
-.theme-light .block-language-mermaid .node text,
-.theme-light .block-language-mermaid .node .nodeLabel,
-.theme-light .block-language-mermaid .node .label,
-.theme-light .block-language-mermaid .node foreignObject div,
-.theme-light .block-language-mermaid .node foreignObject span,
-.theme-light .mermaid .node text,
-.theme-light .mermaid .node .nodeLabel,
-.theme-light .mermaid .node .label,
-.theme-light .mermaid .node foreignObject div,
-.theme-light .mermaid .node foreignObject span {
+/* —— 节点文字 —— */
+:is(.block-language-mermaid, .mermaid) .node :is(text, .nodeLabel, .label, foreignObject div, foreignObject span) {
   color: var(--mermaid-node-text) !important;
   fill: var(--mermaid-node-text) !important;
   font-weight: 500 !important;
 }
 
 /* —— 连线与箭头 —— */
-.theme-dark .block-language-mermaid path.flowchart-link,
-.theme-dark .block-language-mermaid .edgePaths path,
-.theme-dark .block-language-mermaid .edgePath path,
-.theme-dark .mermaid path.flowchart-link,
-.theme-dark .mermaid .edgePaths path,
-.theme-dark .mermaid .edgePath path {
+:is(.block-language-mermaid, .mermaid) :is(path.flowchart-link, .edgePaths path, .edgePath path) {
   stroke: var(--mermaid-line) !important;
   stroke-width: 1.5px !important;
 }
-
-.theme-dark .block-language-mermaid .marker,
-.theme-dark .block-language-mermaid marker path,
-.theme-dark .mermaid .marker,
-.theme-dark .mermaid marker path {
+:is(.block-language-mermaid, .mermaid) :is(.marker, marker path) {
   fill: var(--mermaid-line) !important;
   stroke: var(--mermaid-line) !important;
 }
 
-/* —— 连线文字：彻底隐藏所有背景色块（根除白斑与截断横条） —— */
-.block-language-mermaid .edgeLabel rect,
-.block-language-mermaid .edgeLabels rect,
-.block-language-mermaid .edgeLabel polygon,
-.block-language-mermaid .edgeLabels polygon,
-.mermaid .edgeLabel rect,
-.mermaid .edgeLabels rect,
-.mermaid .edgeLabel polygon,
-.mermaid .edgeLabels polygon {
+/* —— 连线文字：隐藏背景色块（根除白斑与截断横条），文字直接浮在画布上 —— */
+:is(.block-language-mermaid, .mermaid) :is(.edgeLabel, .edgeLabels) :is(rect, polygon) {
   display: none !important;
-  fill: transparent !important;
-  stroke: none !important;
-  opacity: 0 !important;
 }
-
-/* —— 深色主题：连线文字纯白悬浮（黑底纯白字，无背景框） —— */
-.theme-dark .block-language-mermaid .edgeLabel,
-.theme-dark .block-language-mermaid .edgeLabels,
-.theme-dark .block-language-mermaid .edgeLabel *,
-.theme-dark .block-language-mermaid .edgeLabels *,
-.theme-dark .block-language-mermaid .edgePath + .edgeLabel,
-.theme-dark .block-language-mermaid g.edgeLabel,
-.theme-dark .block-language-mermaid g.edgeLabel *,
-.theme-dark .block-language-mermaid .edgeLabel foreignObject,
-.theme-dark .block-language-mermaid .edgeLabel foreignObject *,
-.theme-dark .block-language-mermaid span.edgeLabel,
-.theme-dark .block-language-mermaid .messageText,
-.theme-dark .mermaid .edgeLabel,
-.theme-dark .mermaid .edgeLabels,
-.theme-dark .mermaid .edgeLabel *,
-.theme-dark .mermaid .edgeLabels *,
-.theme-dark .mermaid g.edgeLabel,
-.theme-dark .mermaid g.edgeLabel *,
-.theme-dark .mermaid .edgeLabel foreignObject,
-.theme-dark .mermaid .edgeLabel foreignObject *,
-.theme-dark .mermaid span.edgeLabel,
-.theme-dark .mermaid .messageText {
-  color: #FFFFFF !important;
-  fill: #FFFFFF !important;
+:is(.block-language-mermaid, .mermaid) :is(.edgeLabel, .edgeLabels, .edgeLabel *, .edgeLabels *, .messageText) {
+  color: var(--mermaid-edge-text) !important;
+  fill: var(--mermaid-edge-text) !important;
   stroke: none !important;
   background: transparent !important;
-  background-color: transparent !important;
   border: none !important;
   box-shadow: none !important;
   font-weight: 500 !important;
   font-size: 11.5px !important;
-  opacity: 1 !important;
-}
-
-/* —— 浅色主题：连线文字深黑悬浮（白底深黑字，无背景框） —— */
-.theme-light .block-language-mermaid .edgeLabel,
-.theme-light .block-language-mermaid .edgeLabels,
-.theme-light .block-language-mermaid .edgeLabel *,
-.theme-light .block-language-mermaid .edgeLabels *,
-.theme-light .block-language-mermaid .edgePath + .edgeLabel,
-.theme-light .block-language-mermaid g.edgeLabel,
-.theme-light .block-language-mermaid g.edgeLabel *,
-.theme-light .block-language-mermaid .edgeLabel foreignObject,
-.theme-light .block-language-mermaid .edgeLabel foreignObject *,
-.theme-light .block-language-mermaid span.edgeLabel,
-.theme-light .block-language-mermaid .messageText,
-.theme-light .mermaid .edgeLabel,
-.theme-light .mermaid .edgeLabels,
-.theme-light .mermaid .edgeLabel *,
-.theme-light .mermaid .edgeLabels *,
-.theme-light .mermaid g.edgeLabel,
-.theme-light .mermaid g.edgeLabel *,
-.theme-light .mermaid .edgeLabel foreignObject,
-.theme-light .mermaid .edgeLabel foreignObject *,
-.theme-light .mermaid span.edgeLabel,
-.theme-light .mermaid .messageText {
-  color: #1F2329 !important;
-  fill: #1F2329 !important;
-  stroke: none !important;
-  background: transparent !important;
-  background-color: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  font-weight: 500 !important;
-  font-size: 11.5px !important;
-  opacity: 1 !important;
 }
 
 /* —— 子图（Cluster / Subgraph） —— */
-.theme-dark .block-language-mermaid .cluster rect,
-.theme-dark .mermaid .cluster rect {
+:is(.block-language-mermaid, .mermaid) .cluster rect {
   fill: var(--mermaid-cluster-bg) !important;
   stroke: var(--mermaid-cluster-stroke) !important;
   rx: 8px;
   ry: 8px;
 }
-.theme-dark .block-language-mermaid .cluster text,
-.theme-dark .block-language-mermaid .cluster .nodeLabel,
-.theme-dark .mermaid .cluster text,
-.theme-dark .mermaid .cluster .nodeLabel {
+:is(.block-language-mermaid, .mermaid) .cluster :is(text, .nodeLabel) {
   color: var(--mermaid-node-text) !important;
   fill: var(--mermaid-node-text) !important;
   font-weight: 600 !important;
@@ -2871,16 +2839,167 @@ mark[class*="hl-"] {
 /* ============================================================
    J. Canvas 白板卡片：飞书卡片微质感与聚焦描边
    ============================================================ */
-.canvas-node {
-  border-radius: var(--radius-m) !important;
-  box-shadow: var(--shadow-s) !important;
-  border: 1px solid var(--background-modifier-border) !important;
+/* Obsidian 的边框 / 阴影画在 .canvas-node-container 上，直接覆盖它即可，无需 !important */
+.canvas-node-container {
+  border-radius: var(--radius-m);
+  border-width: 1px;
+  box-shadow: var(--shadow-s);
   transition: box-shadow 0.15s ease, border-color 0.15s ease;
 }
-.canvas-node:hover {
-  box-shadow: var(--shadow-l) !important;
+.canvas-node:hover .canvas-node-container {
+  box-shadow: var(--shadow-l);
 }
-.canvas-node.is-selected {
-  border-color: var(--accent-color) !important;
-  box-shadow: 0 0 0 2px rgba(var(--accent-color-rgb), 0.20), var(--shadow-l) !important;
+.canvas-node:is(.is-selected, .is-focused) .canvas-node-container {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px rgba(var(--accent-color-rgb), 0.20), var(--shadow-l);
+}
+
+/* ============================================================
+   K. 阅读体验：排版细节（现代 CSS，旧内核自动忽略）
+   ============================================================ */
+/* 段落避免末行孤字；标题折行均衡 */
+.markdown-rendered :is(p, li, blockquote) {
+  text-wrap: pretty;
+}
+.markdown-rendered :is(h1, h2, h3, h4, h5, h6),
+.inline-title {
+  text-wrap: balance;
+}
+/* 中英文混排自动加间距（Chromium 140+；代码不受影响） */
+.markdown-rendered,
+.markdown-source-view.mod-cm6 .cm-content,
+.inline-title {
+  text-autospace: normal;
+}
+:is(.markdown-rendered, .markdown-source-view.mod-cm6) :is(code, pre, .cm-inline-code, .HyperMD-codeblock) {
+  text-autospace: no-autospace;
+}
+body.text-autospace-off :is(.markdown-rendered, .markdown-source-view.mod-cm6 .cm-content, .inline-title) {
+  text-autospace: no-autospace;
+}
+
+/* 专注模式：编辑器获得焦点时，非当前行淡化 */
+body.focus-mode .markdown-source-view.mod-cm6 .cm-editor.cm-focused .cm-line:not(.cm-active),
+body.focus-mode .markdown-source-view.mod-cm6 .cm-editor.cm-focused .cm-embed-block:not(:hover) {
+  opacity: 0.35;
+  transition: opacity 0.2s ease;
+}
+body.focus-mode .markdown-source-view.mod-cm6 .cm-editor .cm-line.cm-active {
+  opacity: 1;
+}
+
+/* ============================================================
+   L. 笔记级辅助类（在笔记属性 cssclasses 里填写）
+   wide           加宽版心到 1100px
+   full-width     版心铺满
+   table-compact  紧凑表格
+   hide-properties 隐藏属性面板
+   journal        日记排版：更松的行高与段距
+   cards          Dataview 表格以卡片网格显示
+   ============================================================ */
+:is(.markdown-preview-view, .markdown-source-view).wide {
+  --file-line-width: var(--line-width-wide);
+}
+:is(.markdown-preview-view, .markdown-source-view).full-width {
+  --file-line-width: 100%;
+}
+:is(.markdown-preview-view, .markdown-source-view).table-compact {
+  --table-cell-padding: 4px 8px;
+  --table-text-size: 0.875em;
+  --table-header-size: 0.875em;
+  --table-line-height: 1.4;
+}
+:is(.markdown-preview-view, .markdown-source-view).hide-properties .metadata-container {
+  display: none;
+}
+:is(.markdown-preview-view, .markdown-source-view).journal {
+  --line-height: 1.8;
+  --p-spacing: 12px;
+}
+
+/* cards：Dataview 表格 → 卡片网格（首列作为卡片标题） */
+:is(.markdown-preview-view, .markdown-source-view).cards table.dataview {
+  display: block;
+  border: none;
+  box-shadow: none;
+  overflow: visible;
+}
+:is(.markdown-preview-view, .markdown-source-view).cards table.dataview thead {
+  display: none;
+}
+:is(.markdown-preview-view, .markdown-source-view).cards table.dataview tbody {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+}
+:is(.markdown-preview-view, .markdown-source-view).cards table.dataview tbody tr {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 14px;
+  background: var(--background-primary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: var(--radius-l);
+  transition: box-shadow 0.15s ease, border-color 0.15s ease;
+}
+:is(.markdown-preview-view, .markdown-source-view).cards table.dataview tbody tr:hover {
+  background: var(--background-primary);
+  border-color: var(--background-modifier-border-hover);
+  box-shadow: var(--shadow-s);
+}
+:is(.markdown-preview-view, .markdown-source-view).cards table.dataview td {
+  display: block;
+  padding: 0;
+  border: none;
+  font-size: 0.875em;
+  color: var(--text-muted);
+}
+:is(.markdown-preview-view, .markdown-source-view).cards table.dataview td:first-child {
+  font-size: 1em;
+  font-weight: 500;
+  color: var(--text-normal);
+}
+:is(.markdown-preview-view, .markdown-source-view).cards table.dataview td img {
+  width: 100%;
+  border-radius: var(--radius-m);
+}
+
+/* ============================================================
+   M. 可访问性
+   ============================================================ */
+/* 键盘焦点环：仅键盘导航时出现（鼠标点击不出现），不作用于编辑器正文 */
+:is(button, a, select, summary, input[type="checkbox"], .clickable-icon, .workspace-tab-header, .tree-item-self, .setting-item-control .checkbox-container, .vertical-tab-nav-item, [role="button"], [role="tab"], [role="menuitem"]):focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 1px;
+  box-shadow: none;
+}
+/* 文件树 / 大纲的键盘焦点（Obsidian 用 .has-focus 而非原生焦点） */
+.workspace-leaf.mod-active .tree-item-self.has-focus {
+  box-shadow: inset 0 0 0 2px var(--accent-color);
+}
+
+/* 系统开启「减少动态效果」时关闭过渡与动画 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* 系统开启「增强对比度」时：三级灰升到二级灰，边框加深 */
+@media (prefers-contrast: more) {
+  .theme-light {
+    --text-faint: #646A73;
+    --text-subtle: #4E535A;
+    --background-modifier-border: rgba(28, 31, 35, 0.24);
+  }
+  .theme-dark {
+    --text-faint: rgba(249, 249, 249, 0.80);
+    --text-subtle: rgba(249, 249, 249, 0.80);
+    --background-modifier-border: rgba(255, 255, 255, 0.28);
+  }
 }

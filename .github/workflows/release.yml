@@ -1,0 +1,23 @@
+name: Release
+
+# 推送与 manifest.json 版本号一致的 tag（如 1.2.0）时，自动发布 release 并附带主题文件
+on:
+  push:
+    tags: ['*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check tag matches manifest version
+        run: |
+          v=$(node -p "require('./manifest.json').version")
+          [ "$v" = "${GITHUB_REF_NAME}" ] || { echo "tag ${GITHUB_REF_NAME} != manifest $v"; exit 1; }
+      - name: Create release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "${GITHUB_REF_NAME}" theme.css manifest.json --title "${GITHUB_REF_NAME}" --generate-notes

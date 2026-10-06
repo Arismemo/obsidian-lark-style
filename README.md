@@ -14,6 +14,10 @@ An Obsidian theme inspired by the visual design language of Lark (飞书) docume
 - **Callouts**: Lark highlight-block style (solid light background + lighter same-hue border, 8px radius, 16px padding, title stays body color, only the icon is tinted). All Obsidian callout types mapped, consistent in Reading and Live Preview
 - **Quotes**: Lark quote — 2px gray left bar + secondary text color, no background
 - **Lists**: nested ordered lists step `1.` → `a.` → `i.`
+- **Task statuses**: `[/]` in progress, `[-]` cancelled, `[>]` deferred, `[<]` scheduled, `[!]` important, `[?]` question, `[*]` star — each with its own checkbox icon. Completed parents no longer strike through unfinished subtasks
+- **Accessibility**: text colors meet WCAG AA (4.5:1), visible keyboard focus rings, honors *Reduce motion* and *Increase contrast* system settings
+- **Reading polish**: `text-wrap: pretty` paragraphs, balanced headings, automatic CJK–Latin spacing
+- **Focus mode** (Style Settings): dims everything but the current line while editing
 - **Lark text & background colors**: 7 text colors (`fc-*`) + 14 background colors (`hl-*` / `hl-*-strong`), see below
 - **Headings**: Lark document scale (title 34 / H1 26 / H2 22 / H3 20 / H4 18), weight 500, -0.02em tracking; optional H1 bottom line
 - **Compact UI**: 6px scrollbars, semi-transparent tooltip/notice with high-contrast text
@@ -66,6 +70,25 @@ This theme supports the [Style Settings](https://github.com/mgmeyers/obsidian-st
 - Card layout mode (adds document-style margins)
 - Always-underline links toggle
 
+## 🧩 Per-note CSS classes
+
+Add to a note's `cssclasses` property:
+
+| Class | Effect |
+|---|---|
+| `wide` | 1100px content width |
+| `full-width` | content fills the pane |
+| `table-compact` | tighter, smaller tables |
+| `hide-properties` | hides the Properties panel |
+| `journal` | looser line height and paragraph spacing for journaling |
+| `cards` | renders Dataview tables as a card grid (first column = title) |
+
+```yaml
+---
+cssclasses: [journal, hide-properties]
+---
+```
+
 ## 🖍 Lark text / background colors
 
 ```html
@@ -77,6 +100,15 @@ This theme supports the [Style Settings](https://github.com/mgmeyers/obsidian-st
 Colors: `red` / `orange` / `yellow` / `green` / `blue` / `purple` / `grey`.
 
 ## 🗒 Changelog
+
+### 1.2.0
+- Task statuses `[/] [-] [>] [<] [!] [?] [*]` with distinct icons; fixed completed parent striking through unfinished subtasks; completed tasks use readable gray instead of row opacity
+- Accessibility: AA contrast for faint text / unresolved links / text colors, keyboard focus rings, `prefers-reduced-motion`, `prefers-contrast`
+- `text-wrap: pretty / balance`, CJK–Latin `text-autospace` (toggleable), optional focus mode
+- Per-note classes: `wide`, `full-width`, `table-compact`, `hide-properties`, `journal`, `cards`
+- Mermaid rules rewritten around variables (dark nodes no longer pure white); `!important` 69 → ~45; removed editor `:has()` selectors
+- Canvas cards styled via `.canvas-node-container`, cursor via `--caret-color`
+- CI: stylelint + Playwright screenshot regression; tag-triggered release workflow
 
 ### 1.1.0
 - Typography re-aligned to measured Lark doc values: 16px / 1.625 body, 26/22/20/18 headings at weight 500, 34px doc title, 820px width, 8px paragraph spacing; Inter removed from font stack

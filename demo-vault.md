@@ -8,29 +8,29 @@ This note showcases every styling element. Open it in **Reading View** for the m
 
 ## Typography
 
-You'll see clean typography with PingFang SC + Inter, 14px base size, 1.5 line height. Headings follow the Lark document scale:
+You'll see clean typography with the system font stack, 16px base size, 1.625 line height. Headings follow the Lark document scale:
 
-# Heading 1 (24px, with anchor underline)
+# Heading 1 (26px)
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.
 
-## Heading 2 (20px)
+## Heading 2 (22px)
 
 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 
-### Heading 3 (18px)
+### Heading 3 (20px)
 
 Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
 
-#### Heading 4 (16px)
+#### Heading 4 (18px)
 
 Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-##### Heading 5 (14px)
+##### Heading 5 (16px)
 
 Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium.
 
-###### Heading 6 (13px)
+###### Heading 6 (16px)
 
 Totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto.
 
@@ -134,3 +134,23 @@ That's the end of the demo. Above should be a solid-color horizontal line.
 ## Tags
 
 #lark-style #obsidian #theme
+
+
+## Task statuses
+
+- [ ] To do
+- [x] Done
+    - [ ] Unfinished subtask (stays readable)
+- [/] In progress
+- [-] Cancelled
+- [>] Deferred
+- [<] Scheduled
+- [!] Important
+- [?] Question
+- [*] Star
+
+## Lark text & background colors
+
+<span class="fc-red">red</span> <span class="fc-orange">orange</span> <span class="fc-yellow">yellow</span> <span class="fc-green">green</span> <span class="fc-blue">blue</span> <span class="fc-purple">purple</span> <span class="fc-grey">grey</span>
+
+<mark class="hl-blue">light blue</mark> <mark class="hl-green">light green</mark> <mark class="hl-orange-strong">strong orange</mark> <mark class="hl-purple-strong">strong purple</mark>

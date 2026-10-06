@@ -14,3 +14,6 @@ package-lock.json
 # Build artifacts
 *.zip
 dist/
+
+# Test output
+tests/out/
